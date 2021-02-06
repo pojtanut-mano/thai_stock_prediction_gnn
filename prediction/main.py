@@ -1,2 +1,8 @@
+from dataset import DataSet
+import config
+
+
 if __name__ == '__main__':
-    print('i')
+    stock = DataSet(config)
+    df = stock.load()
+    print(df)
