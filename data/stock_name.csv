@@ -1,0 +1,780 @@
+sector,industry,symbol,ticker,bb_name
+Consumer Cyclical,Auto & Truck Dealerships,ACG.BK,ACG.BK,ACG_TB
+Healthcare,Medical Care Facilities,AHC.BK,AHC.BK,AHC_TB
+Technology,Solar,AKR.BK,AKR.BK,AKR_TB
+Communication Services,Publishing,AMARIN.BK,AMARIN.BK,AMARIN_TB
+Real Estate,Real Estate Services,AMATAV.BK,AMATAV.BK,AMATAV_TB
+Communication Services,Electronic Gaming & Multimedia,AS.BK,AS.BK,AS_TB
+Industrials,Rental & Leasing Services,ASAP.BK,ASAP.BK,ASAP_TB
+Financial Services,Insurance—Property & Casualty,AYUD.BK,AYUD.BK,AYUD_TB
+Financial Services,Capital Markets,BFIT.BK,BFIT.BK,BFIT_TB
+Real Estate,Real Estate—Development,BROCK.BK,BROCK.BK,BROCK_TB
+Financial Services,Insurance—Property & Casualty,BUI.BK,BUI.BK,BUI_TB
+Industrials,Waste Management,BWG.BK,BWG.BK,BWG_TB
+Technology,Computer Hardware,CCET.BK,CCET.BK,CCET_TB
+Financial Services,Capital Markets,CGH.BK,CGH.BK,CGH_TB
+Real Estate,Real Estate—Development,CI.BK,CI.BK,CI_TB
+Industrials,Engineering & Construction,CNT.BK,CNT.BK,CNT_TB
+Industrials,Business Equipment & Supplies,COL.BK,COL.BK,COL_TB
+Industrials,Building Products & Equipment,COTTO.BK,COTTO.BK,COTTO_TB
+Consumer Cyclical,Footwear & Accessories,CPL.BK,CPL.BK,CPL_TB
+Consumer Cyclical,Packaging & Containers,CSC.BK,CSC.BK,CSC_TB
+Consumer Cyclical,Leisure,CSR.BK,CSR.BK,CSR_TB
+Industrials,Electrical Equipment & Parts,CTW.BK,CTW.BK,CTW_TB
+Consumer Cyclical,Lodging,DTC.BK,DTC.BK,DTC_TB
+Real Estate,Real Estate—Development,EVER.BK,EVER.BK,EVER_TB
+Consumer Cyclical,Apparel Retail,FN.BK,FN.BK,FN_TB
+Financial Services,Capital Markets,FSS.BK,FSS.BK,FSS_TB
+Basic Materials,Specialty Chemicals,GC.BK,GC.BK,GC_TB
+Basic Materials,Steel,GJS.BK,GJS.BK,GJS_TB
+Consumer Cyclical,Packaging & Containers,GLOCON.BK,GLOCON.BK,GLOCON_TB
+Communication Services,Advertising Agencies,GPI.BK,GPI.BK,GPI_TB
+Consumer Cyclical,Lodging,GRAND.BK,GRAND.BK,GRAND_TB
+Consumer Cyclical,Apparel Retail,ICC.BK,ICC.BK,ICC_TB
+Technology,Information Technology Services,INET.BK,INET.BK,INET_TB
+Real Estate,Real Estate Services,J.BK,J.BK,J_TB
+Industrials,Rental & Leasing Services,KCAR.BK,KCAR.BK,KCAR_TB
+Healthcare,Medical Care Facilities,KDH.BK,KDH.BK,KDH_TB
+Industrials,Integrated Freight & Logistics,KEX.BK,KEX.BK,KEX_TB
+Real Estate,Real Estate Services,KWC.BK,KWC.BK,KWC_TB
+Technology,Consumer Electronics,KYE.BK,KYE.BK,KYE_TB
+Consumer Defensive,Packaged Foods,LEE.BK,LEE.BK,LEE_TB
+Financial Services,Banks—Regional,LHFG.BK,LHFG.BK,LHFG_TB
+Consumer Defensive,Farm Products,LST.BK,LST.BK,LST_TB
+Consumer Defensive,Packaged Foods,MALEE.BK,MALEE.BK,MALEE_TB
+Consumer Cyclical,Lodging,MANRIN.BK,MANRIN.BK,MANRIN_TB
+Financial Services,Capital Markets,MBKET.BK,MBKET.BK,MBKET_TB
+Financial Services,Asset Management,MFC.BK,MFC.BK,MFC_TB
+Financial Services,Credit Services,MICRO.BK,MICRO.BK,MICRO_TB
+Basic Materials,Steel,MILL.BK,MILL.BK,MILL_TB
+Communication Services,Entertainment,MPIC.BK,MPIC.BK,MPIC_TB
+Technology,Electronics & Computer Distribution,MSC.BK,MSC.BK,MSC_TB
+Financial Services,Insurance—Property & Casualty,MTI.BK,MTI.BK,MTI_TB
+Financial Services,Credit Services,NCAP.BK,NCAP.BK,NCAP_TB
+Basic Materials,Agricultural Inputs,NFC.BK,NFC.BK,NFC_TB
+Financial Services,Insurance—Property & Casualty,NKI.BK,NKI.BK,NKI_TB
+Communication Services,Publishing,NMG.BK,NMG.BK,NMG_TB
+Industrials,Airlines,NOK.BK,NOK.BK,NOK_TB
+Financial Services,Insurance—Property & Casualty,NSI.BK,NSI.BK,NSI_TB
+Consumer Cyclical,"Furnishings, Fixtures & Appliances",OGC.BK,OGC.BK,OGC_TB
+Consumer Cyclical,Restaurants,OISHI.BK,OISHI.BK,OISHI_TB
+Consumer Cyclical,Footwear & Accessories,PAF.BK,PAF.BK,PAF_TB
+Basic Materials,Steel,PAP.BK,PAP.BK,PAP_TB
+Consumer Cyclical,Auto Parts,PCSGH.BK,PCSGH.BK,PCSGH_TB
+Utilities,Utilities—Renewable,PDI.BK,PDI.BK,PDI_TB
+Industrials,Rental & Leasing Services,PL.BK,PL.BK,PL_TB
+Industrials,Engineering & Construction,PLE.BK,PLE.BK,PLE_TB
+Industrials,Marine Shipping,PORT.BK,PORT.BK,PORT_TB
+Communication Services,Publishing,POST.BK,POST.BK,POST_TB
+Real Estate,Real Estate—Development,PRECHA.BK,PRECHA.BK,PRECHA_TB
+Real Estate,Real Estate—Development,PSH.BK,PSH.BK,PSH_TB
+Basic Materials,Specialty Chemicals,PTL.BK,PTL.BK,PTL_TB
+Real Estate,Real Estate—Development,RICHY.BK,RICHY.BK,RICHY_TB
+Consumer Cyclical,"Furnishings, Fixtures & Appliances",ROCK.BK,ROCK.BK,ROCK_TB
+Consumer Cyclical,Lodging,ROH.BK,ROH.BK,ROH_TB
+Energy,Oil & Gas Refining & Marketing,RPC.BK,RPC.BK,RPC_TB
+Basic Materials,Building Materials,SCCC.BK,SCCC.BK,SCCC_TB
+Utilities,Utilities—Regulated Gas,SCN.BK,SCN.BK,SCN_TB
+Consumer Defensive,Packaged Foods,SFP.BK,SFP.BK,SFP_TB
+Consumer Cyclical,Lodging,SHANG.BK,SHANG.BK,SHANG_TB
+Consumer Cyclical,"Furnishings, Fixtures & Appliances",SIAM.BK,SIAM.BK,SIAM_TB
+Consumer Defensive,Education & Training Services,SISB.BK,SISB.BK,SISB_TB
+Energy,Oil & Gas Refining & Marketing,SKE.BK,SKE.BK,SKE_TB
+Industrials,Specialty Business Services,SLP.BK,SLP.BK,SLP_TB
+Industrials,Specialty Industrial Machinery,SMIT.BK,SMIT.BK,SMIT_TB
+Financial Services,Insurance—Property & Casualty,SMK.BK,SMK.BK,SMK_TB
+Industrials,Engineering & Construction,SQ.BK,SQ.BK,SQ_TB
+Consumer Defensive,Beverages—Non-Alcoholic,SSC.BK,SSC.BK,SSC_TB
+Basic Materials,Steel,SSSC.BK,SSSC.BK,SSSC_TB
+Consumer Defensive,Packaged Foods,SST.BK,SST.BK,SST_TB
+Industrials,Electrical Equipment & Parts,STARK.BK,STARK.BK,STARK_TB
+Basic Materials,Specialty Chemicals,STGT.BK,STGT.BK,STGT_TB
+Industrials,Conglomerates,SUC.BK,SUC.BK,SUC_TB
+Technology,Electronic Components,SVI.BK,SVI.BK,SVI_TB
+Industrials,Engineering & Construction,SYNTEC.BK,SYNTEC.BK,SYNTEC_TB
+Industrials,Specialty Business Services,TBSP.BK,TBSP.BK,TBSP_TB
+Technology,Electronic Components,TEAM.BK,TEAM.BK,TEAM_TB
+Financial Services,Insurance—Diversified,TGH.BK,TGH.BK,TGH_TB
+Financial Services,Insurance—Reinsurance,THREL.BK,THREL.BK,THREL_TB
+Basic Materials,Steel,TMT.BK,TMT.BK,TMT_TB
+Financial Services,Capital Markets,TNITY.BK,TNITY.BK,TNITY_TB
+Consumer Cyclical,Apparel Manufacturing,TNL.BK,TNL.BK,TNL_TB
+Consumer Defensive,Household & Personal Products,TNR.BK,TNR.BK,TNR_TB
+Healthcare,Medical Instruments & Supplies,TOG.BK,TOG.BK,TOG_TB
+Consumer Cyclical,Packaging & Containers,TPBI.BK,TPBI.BK,TPBI_TB
+Consumer Cyclical,Textile Manufacturing,TPCORP.BK,TPCORP.BK,TPCORP_TB
+Basic Materials,Building Materials,TPIPL.BK,TPIPL.BK,TPIPL_TB
+Consumer Cyclical,Packaging & Containers,TPP.BK,TPP.BK,TPP_TB
+Consumer Cyclical,Auto Parts,TRU.BK,TRU.BK,TRU_TB
+Basic Materials,Steel,TSTH.BK,TSTH.BK,TSTH_TB
+Consumer Cyclical,Textile Manufacturing,UPF.BK,UPF.BK,UPF_TB
+Basic Materials,Lumber & Wood Production,VNG.BK,VNG.BK,VNG_TB
+Consumer Cyclical,Apparel Manufacturing,WACOAL.BK,WACOAL.BK,WACOAL_TB
+Real Estate,Real Estate—Development,A.BK,A.BK,A_TB
+Consumer Defensive,Household & Personal Products,APCO.BK,APCO.BK,APCO_TB
+Industrials,Metal Fabrication,APCS.BK,APCS.BK,APCS_TB
+Real Estate,Real Estate—Development,CGD.BK,CGD.BK,CGD_TB
+Consumer Defensive,Farm Products,CPI.BK,CPI.BK,CPI_TB
+Technology,Electronics & Computer Distribution,CPW.BK,CPW.BK,CPW_TB
+Industrials,Rental & Leasing Services,CRANE.BK,CRANE.BK,CRANE_TB
+Industrials,Building Products & Equipment,DCC.BK,DCC.BK,DCC_TB
+Basic Materials,Specialty Chemicals,EASON.BK,EASON.BK,EASON_TB
+Real Estate,Real Estate—Development,ESTAR.BK,ESTAR.BK,ESTAR_TB
+Financial Services,Asset Management,FNS.BK,FNS.BK,FNS_TB
+Technology,Electronic Components,FORTH.BK,FORTH.BK,FORTH_TB
+Financial Services,Capital Markets,GBX.BK,GBX.BK,GBX_TB
+Basic Materials,Building Materials,GEL.BK,GEL.BK,GEL_TB
+Real Estate,Real Estate—Development,GLAND.BK,GLAND.BK,GLAND_TB
+Real Estate,Real Estate Services,GREEN.BK,GREEN.BK,GREEN_TB
+Industrials,Tools & Accessories,HTECH.BK,HTECH.BK,HTECH_TB
+Industrials,Specialty Industrial Machinery,KKC.BK,KKC.BK,KKC_TB
+Consumer Cyclical,Residential Construction,KWG.BK,KWG.BK,KWG_TB
+Consumer Cyclical,Lodging,LRH.BK,LRH.BK,LRH_TB
+Communication Services,Entertainment,MATCH.BK,MATCH.BK,MATCH_TB
+Real Estate,Real Estate—Development,MDX.BK,MDX.BK,MDX_TB
+Real Estate,Real Estate—Diversified,NCH.BK,NCH.BK,NCH_TB
+Industrials,Conglomerates,NNCL.BK,NNCL.BK,NNCL_TB
+Real Estate,Real Estate Services,NVD.BK,NVD.BK,NVD_TB
+Consumer Cyclical,Lodging,OHTL.BK,OHTL.BK,OHTL_TB
+Consumer Cyclical,Luxury Goods,PDJ.BK,PDJ.BK,PDJ_TB
+Industrials,Rental & Leasing Services,PE.BK,PE.BK,PE_TB
+Consumer Cyclical,Apparel Manufacturing,PG.BK,PG.BK,PG_TB
+Basic Materials,Agricultural Inputs,PMTA.BK,PMTA.BK,PMTA_TB
+Industrials,Pollution & Treatment Controls,PPP.BK,PPP.BK,PPP_TB
+Utilities,Utilities—Renewable,PRIME.BK,PRIME.BK,PRIME_TB
+Real Estate,Real Estate—Development,PRIN.BK,PRIN.BK,PRIN_TB
+Technology,Information Technology Services,PT.BK,PT.BK,PT_TB
+Consumer Cyclical,Footwear & Accessories,RSP.BK,RSP.BK,RSP_TB
+Industrials,Engineering & Construction,RT.BK,RT.BK,RT_TB
+Utilities,Utilities—Regulated Electric,SCG.BK,SCG.BK,SCG_TB
+Communication Services,Telecom Services,SDC.BK,SDC.BK,SDC_TB
+Consumer Cyclical,Auto Parts,SITHAI.BK,SITHAI.BK,SITHAI_TB
+Healthcare,Medical Care Facilities,SKR.BK,SKR.BK,SKR_TB
+Technology,Semiconductors,SMT.BK,SMT.BK,SMT_TB
+Technology,Solar,SOLAR.BK,SOLAR.BK,SOLAR_TB
+Basic Materials,Chemicals,SUTHA.BK,SUTHA.BK,SUTHA_TB
+Basic Materials,Chemicals,TAE.BK,TAE.BK,TAE_TB
+Industrials,Farm & Heavy Construction Machinery,TCJ.BK,TCJ.BK,TCJ_TB
+Consumer Cyclical,Packaging & Containers,TFI.BK,TFI.BK,TFI_TB
+Basic Materials,Steel,TGPRO.BK,TGPRO.BK,TGPRO_TB
+Healthcare,Medical Care Facilities,THG.BK,THG.BK,THG_TB
+Financial Services,Credit Services,TK.BK,TK.BK,TK_TB
+Consumer Cyclical,Auto Parts,TKT.BK,TKT.BK,TKT_TB
+Basic Materials,Specialty Chemicals,TPA.BK,TPA.BK,TPA_TB
+Basic Materials,Specialty Chemicals,TRUBB.BK,TRUBB.BK,TRUBB_TB
+Consumer Cyclical,Auto Parts,TSC.BK,TSC.BK,TSC_TB
+Technology,Consumer Electronics,TSR.BK,TSR.BK,TSR_TB
+Consumer Defensive,Farm Products,TSTE.BK,TSTE.BK,TSTE_TB
+Industrials,Engineering & Construction,TTCL.BK,TTCL.BK,TTCL_TB
+Consumer Cyclical,Textile Manufacturing,TTI.BK,TTI.BK,TTI_TB
+Consumer Cyclical,Textile Manufacturing,TTT.BK,TTT.BK,TTT_TB
+Industrials,Building Products & Equipment,UMI.BK,UMI.BK,UMI_TB
+Financial Services,Capital Markets,UOBKH.BK,UOBKH.BK,UOBKH_TB
+Consumer Defensive,Packaged Foods,VPO.BK,VPO.BK,VPO_TB
+Consumer Cyclical,Lodging,VRANDA.BK,VRANDA.BK,VRANDA_TB
+Financial Services,Capital Markets,ZMICO.BK,ZMICO.BK,ZMICO_TB
+Industrials,Infrastructure Operations,000008.SZ,000008.SZ,000008_CH
+Technology,Information Technology Services,000034.SZ,000034.SZ,000034_CH
+Industrials,Rental & Leasing Services,000415.SZ,000415.SZ,000415_CH
+Utilities,Utilities—Regulated Electric,000543.SZ,000543.SZ,000543_CH
+Consumer Cyclical,Department Stores,000564.SZ,000564.SZ,000564_CH
+Consumer Cyclical,Auto Parts,000589.SZ,000589.SZ,000589_CH
+Technology,Solar,000591.SZ,000591.SZ,000591_CH
+Healthcare,Drug Manufacturers—Specialty & Generic,000597.SZ,000597.SZ,000597_CH
+Utilities,Utilities—Regulated Electric,000601.SZ,000601.SZ,000601_CH
+Consumer Defensive,Packaged Foods,000639.SZ,000639.SZ,000639_CH
+Communication Services,Broadcasting,000665.SZ,000665.SZ,000665_CH
+Utilities,Utilities—Diversified,000690.SZ,000690.SZ,000690_CH
+Technology,Communication Equipment,000733.SZ,000733.SZ,000733_CH
+Consumer Defensive,Farm Products,000735.SZ,000735.SZ,000735_CH
+Utilities,Utilities—Renewable,000791.SZ,000791.SZ,000791_CH
+Industrials,Infrastructure Operations,000828.SZ,000828.SZ,000828_CH
+Consumer Defensive,Beverages—Non-Alcoholic,000848.SZ,000848.SZ,000848_CH
+Technology,Communication Equipment,000851.SZ,000851.SZ,000851_CH
+Industrials,Specialty Industrial Machinery,000862.SZ,000862.SZ,000862_CH
+Real Estate,Real Estate Services,000863.SZ,000863.SZ,000863_CH
+Consumer Cyclical,Department Stores,000882.SZ,000882.SZ,000882_CH
+Utilities,Utilities—Renewable,000883.SZ,000883.SZ,000883_CH
+Consumer Cyclical,Auto Parts,000887.SZ,000887.SZ,000887_CH
+Consumer Defensive,Packaged Foods,000895.SZ,000895.SZ,000895_CH
+Real Estate,Real Estate—Development,000918.SZ,000918.SZ,000918_CH
+Consumer Cyclical,Textile Manufacturing,002015.SZ,002015.SZ,002015_CH
+Technology,Software—Infrastructure,002017.SZ,002017.SZ,002017_CH
+Technology,Electronic Components,002025.SZ,002025.SZ,002025_CH
+Communication Services,Advertising Agencies,002027.SZ,002027.SZ,002027_CH
+Industrials,Engineering & Construction,002062.SZ,002062.SZ,002062_CH
+Communication Services,Publishing,002181.SZ,002181.SZ,002181_CH
+Consumer Cyclical,Department Stores,002251.SZ,002251.SZ,002251_CH
+Technology,Software—Application,002279.SZ,002279.SZ,002279_CH
+Consumer Defensive,Farm Products,002299.SZ,002299.SZ,002299_CH
+Basic Materials,Paper & Paper Products,002310.KS,002310.KS,002310_KS
+Consumer Defensive,Farm Products,002321.SZ,002321.SZ,002321_CH
+Consumer Cyclical,Auto Parts,002350.KS,002350.KS,002350_KS
+Communication Services,Advertising Agencies,002400.SZ,002400.SZ,002400_CH
+Technology,Semiconductor Equipment & Materials,002504.SZ,002504.SZ,002504_CH
+Consumer Defensive,Packaged Foods,002557.SZ,002557.SZ,002557_CH
+Technology,Electronic Components,002579.SZ,002579.SZ,002579_CH
+Utilities,Utilities—Renewable,002608.SZ,002608.SZ,002608_CH
+Consumer Defensive,Packaged Foods,002661.SZ,002661.SZ,002661_CH
+Financial Services,Financial Conglomerates,002670.SZ,002670.SZ,002670_CH
+Consumer Defensive,Packaged Foods,002695.SZ,002695.SZ,002695_CH
+Industrials,Engineering & Construction,002789.SZ,002789.SZ,002789_CH
+Consumer Defensive,Packaged Foods,002852.SZ,002852.SZ,002852_CH
+Communication Services,Advertising Agencies,002878.SZ,002878.SZ,002878_CH
+Communication Services,Entertainment,002905.SZ,002905.SZ,002905_CH
+Technology,Electronic Components,002913.SZ,002913.SZ,002913_CH
+Consumer Defensive,Packaged Foods,002956.SZ,002956.SZ,002956_CH
+Consumer Defensive,Packaged Foods,002991.SZ,002991.SZ,002991_CH
+Basic Materials,Steel,005490.KS,005490.KS,005490_KS
+Technology,Consumer Electronics,005930.KS,005930.KS,005930_KS
+Industrials,Electrical Equipment & Parts,006260.KS,006260.KS,006260_KS
+Industrials,Electrical Equipment & Parts,010120.KS,010120.KS,010120_KS
+Communication Services,Telecom Services,030200.KS,030200.KS,030200_KS
+,,035900.KQ,035900.KQ,035900_KS
+,,048550.KQ,048550.KQ,048550_KS
+Consumer Cyclical,Internet Retail,057050.KS,057050.KS,057050_KS
+Consumer Cyclical,Auto Parts,073240.KS,073240.KS,073240_KS
+Industrials,Conglomerates,0001.HK,0001.HK,1_HK
+Basic Materials,Building Materials,1102.TW,1102.TW,1102_TT
+Industrials,Engineering & Construction,1186.HK,1186.HK,1186_HK
+Consumer Defensive,Packaged Foods,1215.TW,1215.TW,1215_TT
+Technology,Communication Equipment,1300.HK,1300.HK,1300_HK
+Basic Materials,Building Materials,1313.HK,1313.HK,1313_HK
+Basic Materials,Specialty Chemicals,1314.TW,1314.TW,1314_TT
+Basic Materials,Chemicals,1326.TW,1326.TW,1326_TT
+Real Estate,Real Estate—Development,1396.HK,1396.HK,1396_HK
+Healthcare,Medical Care Facilities,1515.HK,1515.HK,1515_HK
+Industrials,Integrated Freight & Logistics,1589.HK,1589.HK,1589_HK
+Energy,Oil & Gas E&P,1605.T,1605.T,1605_JP
+Financial Services,Credit Services,1606.HK,1606.HK,1606_HK
+Technology,Consumer Electronics,1747.HK,1747.HK,1747_HK
+Utilities,Utilities—Renewable,1798.HK,1798.HK,1798_HK
+Industrials,Engineering & Construction,1800.HK,1800.HK,1800_HK
+Communication Services,Telecom Services,1883.HK,1883.HK,1883_HK
+Basic Materials,Paper & Paper Products,1904.TW,1904.TW,1904_TT
+Industrials,Infrastructure Operations,200429.SZ,200429.SZ,200429_CH
+Utilities,Utilities—Renewable,200539.SZ,200539.SZ,200539_CH
+Basic Materials,Building Materials,2009.HK,2009.HK,2009_HK
+Real Estate,Real Estate—Development,2019.HK,2019.HK,2019_HK
+Consumer Cyclical,Auto Parts,2105.TW,2105.TW,2105_TT
+Consumer Defensive,Packaged Foods,2206.T,2206.T,2206_JP
+Consumer Defensive,Packaged Foods,2229.T,2229.T,2229_JP
+Technology,Electronic Components,2308.TW,2308.TW,2308_TT
+Technology,Computer Hardware,2405.TW,2405.TW,2405_TT
+Industrials,Aerospace & Defense,2630.TW,2630.TW,2630_TT
+Industrials,Aerospace & Defense,2634.TW,2634.TW,2634_TT
+Consumer Defensive,Packaged Foods,2810.T,2810.T,2810_JP
+Consumer Defensive,Packaged Foods,2871.T,2871.T,2871_JP
+Basic Materials,Specialty Chemicals,300019.SZ,300019.SZ,300019_CH
+Technology,Semiconductor Equipment & Materials,300046.SZ,300046.SZ,300046_CH
+Communication Services,Advertising Agencies,300058.SZ,300058.SZ,300058_CH
+Basic Materials,Specialty Chemicals,300063.SZ,300063.SZ,300063_CH
+Industrials,Electrical Equipment & Parts,300076.SZ,300076.SZ,300076_CH
+Technology,Solar,300125.SZ,300125.SZ,300125_CH
+Consumer Defensive,Packaged Foods,300146.SZ,300146.SZ,300146_CH
+Basic Materials,Specialty Chemicals,300305.SZ,300305.SZ,300305_CH
+Industrials,Electrical Equipment & Parts,300376.SZ,300376.SZ,300376_CH
+Communication Services,Advertising Agencies,300392.SZ,300392.SZ,300392_CH
+Energy,Oil & Gas Equipment & Services,300471.SZ,300471.SZ,300471_CH
+Industrials,Specialty Industrial Machinery,300510.SZ,300510.SZ,300510_CH
+Industrials,Specialty Business Services,300592.SZ,300592.SZ,300592_CH
+Technology,Semiconductors,300782.SZ,300782.SZ,300782_CH
+Communication Services,Advertising Agencies,300805.SZ,300805.SZ,300805_CH
+Communication Services,Entertainment,300860.SZ,300860.SZ,300860_CH
+Industrials,Engineering & Construction,3311.HK,3311.HK,3311_HK
+Basic Materials,Building Materials,3323.HK,3323.HK,3323_HK
+Real Estate,Real Estate—Development,0337.HK,0337.HK,337_HK
+Industrials,Airports & Air Services,0357.HK,0357.HK,357_HK
+Technology,Solar,3576.TW,3576.TW,3576_TT
+Communication Services,Telecom Services,3682.TW,3682.TW,3682_TT
+Technology,Communication Equipment,3773.T,3773.T,3773_JP
+Consumer Defensive,Packaged Foods,3799.HK,3799.HK,3799_HK
+Industrials,Engineering & Construction,0390.HK,0390.HK,390_HK
+Consumer Cyclical,Packaging & Containers,3947.T,3947.T,3947_JP
+Consumer Cyclical,Packaging & Containers,3951.T,3951.T,3951_JP
+Basic Materials,Chemicals,4004.T,4004.T,4004_JP
+Basic Materials,Specialty Chemicals,4028.T,4028.T,4028_JP
+Basic Materials,Chemicals,4061.T,4061.T,4061_JP
+Basic Materials,Chemicals,4188.T,4188.T,4188_JP
+Basic Materials,Specialty Chemicals,4202.T,4202.T,4202_JP
+Basic Materials,Specialty Chemicals,4401.T,4401.T,4401_JP
+Communication Services,Telecom Services,4904.TW,4904.TW,4904_TT
+Consumer Cyclical,Specialty Retail,0493.HK,0493.HK,493_HK
+Energy,Oil & Gas Refining & Marketing,5020.T,5020.T,5020_JP
+Technology,Computer Hardware,5215.TW,5215.TW,5215_TT
+Technology,Electronic Components,5233.TWO,5233.TWO,5233_TT
+Technology,Electronic Components,5284.TW,5284.TW,5284_TT
+Utilities,Utilities—Regulated Water,600008.SS,600008.SS,600008_CH
+Industrials,Infrastructure Operations,600020.SS,600020.SS,600020_CH
+Real Estate,Real Estate Services,600064.SS,600064.SS,600064_CH
+Utilities,Utilities—Renewable,600116.SS,600116.SS,600116_CH
+Industrials,Conglomerates,600207.SS,600207.SS,600207_CH
+Energy,Oil & Gas Integrated,600256.SS,600256.SS,600256_CH
+Consumer Cyclical,Lodging,600258.SS,600258.SS,600258_CH
+Industrials,Industrial Distribution,600287.SS,600287.SS,600287_CH
+Industrials,Railroads,600368.SS,600368.SS,600368_CH
+Industrials,Specialty Industrial Machinery,600525.SS,600525.SS,600525_CH
+Technology,Semiconductors,600584.SS,600584.SS,600584_CH
+Real Estate,Real Estate—Development,600641.SS,600641.SS,600641_CH
+Consumer Cyclical,Department Stores,600693.SS,600693.SS,600693_CH
+Consumer Cyclical,Department Stores,600694.SS,600694.SS,600694_CH
+Real Estate,Real Estate Services,600716.SS,600716.SS,600716_CH
+Consumer Cyclical,Department Stores,600723.SS,600723.SS,600723_CH
+Consumer Defensive,Packaged Foods,600737.SS,600737.SS,600737_CH
+Healthcare,Medical Distribution,600739.SS,600739.SS,600739_CH
+Industrials,Railroads,600834.SS,600834.SS,600834_CH
+Consumer Cyclical,Department Stores,600861.SS,600861.SS,600861_CH
+Utilities,Utilities—Renewable,600868.SS,600868.SS,600868_CH
+Consumer Cyclical,Auto Manufacturers,600877.SS,600877.SS,600877_CH
+Utilities,Utilities—Independent Power Producers,600900.SS,600900.SS,600900_CH
+Financial Services,Credit Services,600901.SS,600901.SS,600901_CH
+Consumer Defensive,Farm Products,600975.SS,600975.SS,600975_CH
+Industrials,Conglomerates,600981.SS,600981.SS,600981_CH
+Utilities,Utilities—Renewable,601016.SS,601016.SS,601016_CH
+Basic Materials,Specialty Chemicals,601118.SS,601118.SS,601118_CH
+Utilities,Utilities—Regulated Water,601158.SS,601158.SS,601158_CH
+Utilities,Utilities—Regulated Water,601199.SS,601199.SS,601199_CH
+Industrials,Railroads,601333.SS,601333.SS,601333_CH
+Utilities,Utilities—Regulated Water,601368.SS,601368.SS,601368_CH
+Utilities,Utilities—Renewable,601778.SS,601778.SS,601778_CH
+Industrials,Engineering & Construction,601789.SS,601789.SS,601789_CH
+Communication Services,Publishing,601928.SS,601928.SS,601928_CH
+Basic Materials,Lumber & Wood Production,601996.SS,601996.SS,601996_CH
+Communication Services,Entertainment,603103.SS,603103.SS,603103_CH
+Consumer Cyclical,Department Stores,603123.SS,603123.SS,603123_CH
+Consumer Defensive,Beverages—Non-Alcoholic,603156.SS,603156.SS,603156_CH
+Basic Materials,Specialty Chemicals,603212.SS,603212.SS,603212_CH
+Healthcare,Biotechnology,603233.SS,603233.SS,603233_CH
+Technology,Electronic Components,603328.SS,603328.SS,603328_CH
+Basic Materials,Specialty Chemicals,603378.SS,603378.SS,603378_CH
+Consumer Cyclical,Footwear & Accessories,603477.SS,603477.SS,603477_CH
+Utilities,Utilities—Renewable,603693.SS,603693.SS,603693_CH
+Consumer Cyclical,Department Stores,603708.SS,603708.SS,603708_CH
+Consumer Defensive,Packaged Foods,603719.SS,603719.SS,603719_CH
+Energy,Oil & Gas Equipment & Services,603727.SS,603727.SS,603727_CH
+Technology,Information Technology Services,603869.SS,603869.SS,603869_CH
+Technology,Electronic Components,603989.SS,603989.SS,603989_CH
+Technology,Electronic Components,6108.TW,6108.TW,6108_TT
+Consumer Defensive,Packaged Foods,6186.HK,6186.HK,6186_HK
+Technology,Semiconductor Equipment & Materials,6323.T,6323.T,6323_JP
+Energy,Oil & Gas Refining & Marketing,6505.TW,6505.TW,6505_TT
+Technology,Consumer Electronics,6758.T,6758.T,6758_JP
+Consumer Cyclical,Restaurants,6862.HK,6862.HK,6862_HK
+,,688519.SS,688519.SS,688519_CH
+Industrials,Specialty Industrial Machinery,7011.T,7011.T,7011_JP
+Basic Materials,Building Materials,0743.HK,0743.HK,743_HK
+Energy,Oil & Gas E&P,8031.T,8031.T,8031_JP
+Industrials,Conglomerates,8058.T,8058.T,8058_JP
+Technology,Electronic Components,8074.TWO,8074.TWO,8074_TT
+Energy,Oil & Gas Integrated,0857.HK,0857.HK,857_HK
+Energy,Oil & Gas E&P,0883.HK,0883.HK,883_HK
+Basic Materials,Chemicals,900921.SS,900921.SS,900921_CH
+Utilities,Utilities—Independent Power Producers,0902.HK,0902.HK,902_HK
+Consumer Cyclical,Packaging & Containers,0906.HK,0906.HK,906_HK
+Basic Materials,Building Materials,0914.HK,0914.HK,914_HK
+Utilities,Utilities—Renewable,0916.HK,0916.HK,916_HK
+Communication Services,Telecom Services,0941.HK,0941.HK,941_HK
+Utilities,Utilities—Renewable,9501.T,9501.T,9501_JP
+Consumer Defensive,Beverages—Non-Alcoholic,9633.HK,9633.HK,9633_HK
+Industrials,Engineering & Construction,9933.TW,9933.TW,9933_TT
+Real Estate,Real Estate—Development,9968.HK,9968.HK,9968_HK
+Consumer Defensive,Packaged Foods,AAK.ST,AAK.ST,AAK_SS
+Financial Services,Mortgage Finance,AAVAS.NS,AAVAS.NS,AAVAS_IN
+Industrials,Electrical Equipment & Parts,ABBN.SW,ABBN.SW,ABBN_SW
+Basic Materials,Building Materials,ABC.AX,ABC.AX,ABC_AU
+,,ABSOF,ABSOF,ABS_PM
+Basic Materials,Building Materials,ACC.NS,ACC.NS,ACC_IN
+Basic Materials,Building Materials,AMBUJACEM.NS,AMBUJACEM.NS,ACEM_IN
+Consumer Cyclical,Specialty Retail,ACES.JK,ACES.JK,ACES_IJ
+Consumer Defensive,Grocery Stores,AD.AS,AD.AS,AD_NA
+Utilities,Utilities—Independent Power Producers,ADANIPOWER.NS,ADANIPOWER.NS,ADANI_IN
+Utilities,Utilities—Regulated Electric,ADANITRANS.NS,ADANITRANS.NS,ADANIT_IN
+Financial Services,Credit Services,ADMF.JK,ADMF.JK,ADMF_IJ
+Energy,Thermal Coal,ADRO.JK,ADRO.JK,ADRO_IJ
+Utilities,Utilities—Diversified,AES,AES,AES_US
+Energy,Oil & Gas Refining & Marketing,ALD.AX,ALD.AX,ALD_AU
+Basic Materials,Paper & Paper Products,ALDO.JK,ALDO.JK,ALDO_IJ
+Technology,Information Technology Services,AMS.MC,AMS.MC,AMS_SM
+Industrials,Industrial Distribution,ANDR.VI,ANDR.VI,ANDR_AV
+Basic Materials,Specialty Chemicals,ASIANPAINT.NS,ASIANPAINT.NS,APNT_IN
+Industrials,Pollution & Treatment Controls,AQUA,AQUA,AQUA_US
+Consumer Cyclical,Packaging & Containers,ARD,ARD,ARD_US
+,,ASTERDM.BO,ASTERDM.BO,ASTERDM_IN
+Technology,Information Technology Services,ATO.VI,ATO.VI,ATO_FP
+Consumer Defensive,Packaged Foods,ATRAV.HE,ATRAV.HE,ATRAV_FH
+Industrials,Engineering & Construction,5GJ.SI,5GJ.SI,AUSG_SP
+Technology,Electronics & Computer Distribution,AVT,AVT,AVT_US
+Utilities,Utilities—Renewable,AZRE,AZRE,AZRE_US
+Consumer Defensive,Food Distribution,B4B.DE,B4B.DE,B4B_GR
+Financial Services,Credit Services,BAJFINANCE.NS,BAJFINANCE.NS,BAF_IN
+Industrials,Aerospace & Defense,BBD-B.TO,BBD-B.TO,BBD/B_CN
+Consumer Defensive,Household & Personal Products,BEI.DE,BEI.DE,BEI_GR
+Financial Services,Credit Services,BFIN.JK,BFIN.JK,BFIN_IJ
+Financial Services,Asset Management,BAJAJHLDNG.NS,BAJAJHLDNG.NS,BJHI_IN
+Consumer Cyclical,Packaging & Containers,BLL,BLL,BLL_US
+Communication Services,Entertainment,BMTR.JK,BMTR.JK,BMTR_IJ
+Energy,Oil & Gas Integrated,BP.L,BP.L,BP/_LN
+,,BPCL.BO,BPCL.BO,BPCL_IN
+Consumer Defensive,Packaged Foods,BRFS3.SA,BRFS3.SA,BRFS3_BZ
+Basic Materials,Specialty Chemicals,BERGEPAINT.NS,BERGEPAINT.NS,BRGR_IN
+Financial Services,Insurance—Diversified,BRK-A,BRK-A,BRK/A_US
+Consumer Cyclical,Packaging & Containers,BRNA.JK,BRNA.JK,BRNA_IJ
+Basic Materials,Chemicals,BRPT.JK,BRPT.JK,BRPT_IJ
+Technology,Software—Application,BTBT,BTBT,BTBT_US
+Communication Services,Telecom Services,BTEL.JK,BTEL.JK,BTEL_IJ
+Energy,Thermal Coal,BUMI.JK,BUMI.JK,BUMI_IJ
+Financial Services,Capital Markets,CAMS.NS,CAMS.NS,CAMS_IN
+Industrials,Electrical Equipment & Parts,CAPC,CAPC,CAPC_US
+Financial Services,Capital Markets,CDSL.NS,CDSL.NS,CDSL_IN
+,,CESC.BO,CESC.BO,CESC_IN
+Real Estate,REIT—Office,CGR.PA,CGR.PA,CGR_FP
+Industrials,Engineering & Construction,CIM.AX,CIM.AX,CIM_AU
+Communication Services,Entertainment,CMGR,CMGR,CMGR_US
+Industrials,Infrastructure Operations,CMNP.JK,CMNP.JK,CMNP_IJ
+Consumer Defensive,Grocery Stores,CO.PA,CO.PA,CO_FP
+Energy,Thermal Coal,COALINDIA.NS,COALINDIA.NS,COAL_IN
+Real Estate,REIT—Diversified,COV.PA,COV.PA,COV_FP
+Healthcare,Diagnostics & Research,CSTL,CSTL,CST_US
+Industrials,Specialty Business Services,CVEO,CVEO,CVEO_US
+Energy,Oil & Gas Integrated,CVX,CVX,CVX_US
+Energy,Oil & Gas Refining & Marketing,DCC.L,DCC.L,DCC_LN
+Industrials,Farm & Heavy Construction Machinery,DE,DE,DE_US
+Consumer Defensive,Packaged Foods,DFMFOODS.NS,DFMFOODS.NS,DFMF_IN
+,,DMART.BO,DMART.BO,DMART_IN
+Healthcare,Medical Devices,EAR,EAR,EAR_US
+Financial Services,Insurance Brokers,EHTH,EHTH,EHTH_US
+Consumer Cyclical,Lodging,EIHOTEL.NS,EIHOTEL.NS,EIH_IN
+Industrials,Engineering & Construction,EN.VI,EN.VI,EN_FP
+Utilities,Utilities—Regulated Electric,ENELDXCH.SN,ENELDXCH.SN,ENELDXCH_CI
+Consumer Cyclical,Specialty Retail,ERAA.JK,ERAA.JK,ERAA_IJ
+Technology,Communication Equipment,ERIC-B.ST,ERIC-B.ST,ERICB_SS
+Utilities,Utilities—Regulated Electric,EVRG,EVRG,EVRG_US
+Financial Services,Insurance Brokers,FANH,FANH,FANH_US
+Consumer Defensive,Farm Products,FAPA.JK,FAPA.JK,FAPA_IJ
+Consumer Cyclical,Packaging & Containers,FASW.JK,FASW.JK,FASW_IJ
+Utilities,Utilities—Diversified,FE,FE,FE_US
+Financial Services,Credit Services,FINV,FINV,FINV_US
+,,FORTIS.BO,FORTIS.BO,FORTIS_IN
+,,GAEL.BO,GAEL.BO,GAEX_IN
+Technology,Software—Application,GBG.L,GBG.L,GBG_LN
+Consumer Cyclical,Lodging,GHG,GHG,GHG_US
+Consumer Cyclical,Auto Manufacturers,GM,GM,GM_US
+Communication Services,Internet Content & Information,GOOGL,GOOGL,GOOGL_US
+Financial Services,Asset Management,HABITAT.SN,HABITAT.SN,HABITAT_CI
+Healthcare,Medical Care Facilities,HEAL.JK,HEAL.JK,HEAL_IJ
+Consumer Defensive,Household & Personal Products,HEN3.DE,HEN3.DE,HEN3_GR
+Industrials,Engineering & Construction,HOT.DE,HOT.DE,HOT_GR
+Consumer Cyclical,Lodging,HOTL.JK,HOTL.JK,HOTL_IJ
+,,HINDPETRO.BO,HINDPETRO.BO,HPCL_IN
+Energy,Thermal Coal,HRUM.JK,HRUM.JK,HRUM_IJ
+Consumer Cyclical,Lodging,HTHT,HTHT,HTHT_US
+,,HUDCO.BO,HUDCO.BO,HUDCO_IN
+Technology,Information Technology Services,IBM,IBM,IBM_US
+Consumer Defensive,Packaged Foods,ICBP.JK,ICBP.JK,ICBP_IJ
+Utilities,Utilities—Regulated Electric,IDA,IDA,IDA_US
+,,INDHOTEL.BO,INDHOTEL.BO,IH_IN
+Basic Materials,Specialty Chemicals,INCF.JK,INCF.JK,INCF_IJ
+Consumer Defensive,Packaged Foods,INDF.JK,INDF.JK,INDF_IJ
+Consumer Cyclical,Textile Manufacturing,INDR.JK,INDR.JK,INDR_IJ
+,,INEOSSTYRO.BO,INEOSSTYRO.BO,INEOS_IN
+,,INOXLEISUR.BO,INOXLEISUR.BO,INOL_IN
+Consumer Cyclical,Lodging,INPP.JK,INPP.JK,INPP_IJ
+,,IOC.BO,IOC.BO,IOCL_IN
+Communication Services,Telecom Services,ISAT.JK,ISAT.JK,ISAT_IJ
+Energy,Thermal Coal,ITMG.JK,ITMG.JK,ITMG_IJ
+Consumer Cyclical,Apparel Retail,ITX.MC,ITX.MC,ITX_SM
+Consumer Defensive,Beverages—Non-Alcoholic,KO,KO,K0_US
+Healthcare,Drug Manufacturers—Specialty & Generic,KAEF.JK,KAEF.JK,KAEF_IJ
+Industrials,Building Products & Equipment,KIAS.JK,KIAS.JK,KIAS_IJ
+Industrials,Consulting Services,5MZ.SI,5MZ.SI,KMEN_SP
+Industrials,Building Products & Equipment,KOIN.JK,KOIN.JK,KOIN_IJ
+Utilities,Utilities—Diversified,LEC.F,LEC.F,LEC_GR
+Industrials,Airlines,LHA.DE,LHA.DE,LHA_GR
+Real Estate,Real Estate—Development,LPKR.JK,LPKR.JK,LPKR_IJ
+Technology,Semiconductor Equipment & Materials,LRCX,LRCX,LRTX_US
+Financial Services,Credit Services,LX,LX,LX_US
+Basic Materials,Specialty Chemicals,LYB,LYB,LYB_US
+,,MHRIL.BO,MHRIL.BO,MHRL_IN
+Real Estate,Real Estate Services,MKPI.JK,MKPI.JK,MKPI_IJ
+Consumer Cyclical,Department Stores,MKS.L,MKS.L,MKS_LN
+Financial Services,Credit Services,M&MFIN.NS,M&MFIN.NS,MMFS_IN
+Consumer Defensive,Grocery Stores,MRW.L,MRW.L,MRW_LN
+Technology,Semiconductors,MTSI,MTSI,MTSI_US
+Consumer Defensive,Packaged Foods,NESN.SW,NESN.SW,NESN_SW
+Technology,Communication Equipment,NOKIA.HE,NOKIA.HE,NOKIA_FH
+Energy,Oil & Gas Equipment & Services,NOV,NOV,NOV_US
+Real Estate,Real Estate Services,NTP,NTP,NTP_US
+Industrials,Specialty Industrial Machinery,OERL.SW,OERL.SW,OERL_SW
+,,OFSS.BO,OFSS.BO,OFSS_IN
+Energy,Oil & Gas E&P,OKEA.OL,OKEA.OL,OKEA_NO
+Industrials,Airports & Air Services,OMAB.MX,OMAB.MX,OMAB_MM
+Consumer Defensive,Household & Personal Products,OR.VI,OR.VI,OR_FP
+Energy,Oil & Gas E&P,OSH.AX,OSH.AX,OSH_AU
+Utilities,Utilities—Regulated Electric,PCG,PCG,PCG_US
+Energy,Oil & Gas Refining & Marketing,PKI.TO,PKI.TO,PKI_CN
+Utilities,Utilities—Regulated Electric,POWR.JK,POWR.JK,POWR_IJ
+Financial Services,Asset Management,PROVIDA.SN,PROVIDA.SN,PROVIDA_CI
+Energy,Thermal Coal,PTBA.JK,PTBA.JK,PTBA_IJ
+Industrials,Engineering & Construction,PTPP.JK,PTPP.JK,PTPP_IJ
+Industrials,Airlines,QAN.AX,QAN.AX,QAN_AU
+,,QFIN,QFIN,QFIN_US
+Consumer Cyclical,Restaurants,QSP-UN.TO,QSP-UN.TO,QSP-U_CN
+,,5272.KL,5272.KL,RAHH_MK
+Consumer Defensive,Household & Personal Products,RB.L,RB.L,RB/_LN
+Industrials,Infrastructure Operations,RE.PA,RE.PA,RE_FP
+Basic Materials,Other Industrial Metals & Mining,RIO.L,RIO.L,RIO_LN
+Basic Materials,Chemicals,2010.SR,2010.SR,SABIC_AB
+Technology,Information Technology Services,SABR,SABR,SABR_US
+Energy,Oil & Gas Equipment & Services,SBMO.AS,SBMO.AS,SBMO_NA
+Industrials,Specialty Industrial Machinery,SGRE.MC,SGRE.MC,SGRE_SM
+Consumer Cyclical,Lodging,SHOT.ST,SHOT.ST,SHOT_SL
+Industrials,Specialty Industrial Machinery,SIE.DE,SIE.DE,SIE_GR
+Consumer Defensive,Packaged Foods,SKBM.JK,SKBM.JK,SKBM_IJ
+Energy,Oil & Gas Equipment & Services,SLB,SLB,SLB_US
+Consumer Cyclical,Packaging & Containers,SLGN,SLGN,SLGN_US
+Financial Services,Asset Management,SRTG.JK,SRTG.JK,SRTG_IJ
+Communication Services,Telecom Services,Z74.SI,Z74.SI,ST_SP
+,,STE.SI,STE.SI,STE_SP
+Energy,Oil & Gas E&P,STO.AX,STO.AX,STO_AU
+Industrials,Specialty Business Services,SW.VI,SW.VI,SW_FP
+Technology,Software—Application,TEMN.SW,TEMN.SW,TEMN_SW
+Consumer Defensive,Beverages—Wineries & Distilleries,Y92.SI,Y92.SI,THBEV_SP
+Basic Materials,Specialty Chemicals,TPIA.JK,TPIA.JK,TPIA_IJ
+Industrials,Marine Shipping,TRAM.JK,TRAM.JK,TRAM_IJ
+Consumer Defensive,Grocery Stores,TSCO.L,TSCO.L,TSCO_LN
+Industrials,Specialty Industrial Machinery,VALMT.HE,VALMT.HE,VALMT_FH
+Energy,Oil & Gas Equipment & Services,WOR.AX,WOR.AX,WOR_AU
+Utilities,Utilities—Renewable,ACE.BK,ACE.BK,ACE_TB
+Communication Services,Telecom Services,ADVANC.BK,ADVANC.BK,ADVANC_TB
+Financial Services,Credit Services,AEONTS.BK,AEONTS.BK,AEONTS_TB
+Real Estate,Real Estate—Development,AMATA.BK,AMATA.BK,AMATA_TB
+Industrials,Airports & Air Services,AOT.BK,AOT.BK,AOT_TB
+Real Estate,Real Estate—Development,AP.BK,AP.BK,AP_TB
+Consumer Cyclical,Lodging,AWC.BK,AWC.BK,AWC_TB
+Financial Services,Asset Management,BAM.BK,BAM.BK,BAM_TB
+Energy,Thermal Coal,BANPU.BK,BANPU.BK,BANPU_TB
+Financial Services,Banks—Regional,BBL.BK,BBL.BK,BBL_TB
+Healthcare,Medical Care Facilities,BCH.BK,BCH.BK,BCH_TB
+Energy,Oil & Gas Refining & Marketing,BCP.BK,BCP.BK,BCP_TB
+Utilities,Utilities—Renewable,BCPG.BK,BCPG.BK,BCPG_TB
+Healthcare,Medical Care Facilities,BDMS.BK,BDMS.BK,BDMS_TB
+Communication Services,Broadcasting,BEC.BK,BEC.BK,BEC_TB
+Industrials,Railroads,BEM.BK,BEM.BK,BEM_TB
+Utilities,Utilities—Independent Power Producers,BGRIM.BK,BGRIM.BK,BGRIM_TB
+Healthcare,Medical Care Facilities,BH.BK,BH.BK,BH_TB
+Industrials,Conglomerates,BJC.BK,BJC.BK,BJC_TB
+Utilities,Utilities—Independent Power Producers,BPP.BK,BPP.BK,BPP_TB
+Industrials,Railroads,BTS.BK,BTS.BK,BTS_TB
+Consumer Defensive,Beverages—Non-Alcoholic,CBG.BK,CBG.BK,CBG_TB
+Consumer Cyclical,Resorts & Casinos,CENTEL.BK,CENTEL.BK,CENTEL_TB
+Healthcare,Medical Care Facilities,CHG.BK,CHG.BK,CHG_TB
+Industrials,Engineering & Construction,CK.BK,CK.BK,CK_TB
+Utilities,Utilities—Renewable,CKP.BK,CKP.BK,CKP_TB
+Technology,Electronics & Computer Distribution,COM7.BK,COM7.BK,COM7_TB
+Consumer Defensive,Grocery Stores,CPALL.BK,CPALL.BK,CPALL_TB
+Consumer Defensive,Farm Products,CPF.BK,CPF.BK,CPF_TB
+Real Estate,Real Estate—Diversified,CPN.BK,CPN.BK,CPN_TB
+Consumer Cyclical,Department Stores,CRC.BK,CRC.BK,CRC_TB
+Industrials,Electrical Equipment & Parts,DELTA.BK,DELTA.BK,DELTA_TB
+Consumer Cyclical,Home Improvement Retail,DOHOME.BK,DOHOME.BK,DOHOME_TB
+Communication Services,Telecom Services,DTAC.BK,DTAC.BK,DTAC_TB
+Utilities,Utilities—Renewable,EA.BK,EA.BK,EA_TB
+Utilities,Utilities—Independent Power Producers,EGCO.BK,EGCO.BK,EGCO_TB
+Basic Materials,Specialty Chemicals,EPG.BK,EPG.BK,EPG_TB
+Energy,Oil & Gas Refining & Marketing,ESSO.BK,ESSO.BK,ESSO_TB
+Consumer Defensive,Packaged Foods,GFPT.BK,GFPT.BK,GFPT_TB
+Consumer Cyclical,Home Improvement Retail,GLOBAL.BK,GLOBAL.BK,GLOBAL_TB
+Utilities,Utilities—Regulated Electric,GPSC.BK,GPSC.BK,GPSC_TB
+Utilities,Utilities—Renewable,GULF.BK,GULF.BK,GULF_TB
+Industrials,Electrical Equipment & Parts,GUNKUL.BK,GUNKUL.BK,GUNKUL_TB
+Technology,Electronic Components,HANA.BK,HANA.BK,HANA_TB
+Consumer Cyclical,Home Improvement Retail,HMPRO.BK,HMPRO.BK,HMPRO_TB
+Communication Services,Telecom Services,INTUCH.BK,INTUCH.BK,INTUCH_TB
+Energy,Oil & Gas Refining & Marketing,IRPC.BK,IRPC.BK,IRPC_TB
+Basic Materials,Chemicals,IVL.BK,IVL.BK,IVL_TB
+Communication Services,Telecom Services,JAS.BK,JAS.BK,JAS_TB
+Consumer Cyclical,Specialty Retail,JMART.BK,JMART.BK,JMART_TB
+Financial Services,Credit Services,JMT.BK,JMT.BK,JMT_TB
+Financial Services,Banks—Regional,KBANK.BK,KBANK.BK,KBANK_TB
+Technology,Electronic Components,KCE.BK,KCE.BK,KCE_TB
+Financial Services,Banks—Regional,KKP.BK,KKP.BK,KKP_TB
+Financial Services,Banks—Regional,KTB.BK,KTB.BK,KTB_TB
+Financial Services,Credit Services,KTC.BK,KTC.BK,KTC_TB
+Real Estate,Real Estate—Diversified,LH.BK,LH.BK,LH_TB
+Communication Services,Entertainment,MAJOR.BK,MAJOR.BK,MAJOR_TB
+Real Estate,Real Estate Services,MBK.BK,MBK.BK,MBK_TB
+Healthcare,Drug Manufacturers—Specialty & Generic,MEGA.BK,MEGA.BK,MEGA_TB
+Consumer Cyclical,Lodging,MINT.BK,MINT.BK,MINT_TB
+Financial Services,Credit Services,MTC.BK,MTC.BK,MTC_TB
+Real Estate,Real Estate—Development,ORI.BK,ORI.BK,ORI_TB
+Consumer Defensive,Beverages—Non-Alcoholic,OSP.BK,OSP.BK,OSP_TB
+Communication Services,Advertising Agencies,PLANB.BK,PLANB.BK,PLANB_TB
+Energy,Oil & Gas Midstream,PRM.BK,PRM.BK,PRM_TB
+Consumer Cyclical,Specialty Retail,PTG.BK,PTG.BK,PTG_TB
+Energy,Oil & Gas Integrated,PTT.BK,PTT.BK,PTT_TB
+Energy,Oil & Gas E&P,PTTEP.BK,PTTEP.BK,PTTEP_TB
+Basic Materials,Chemicals,PTTGC.BK,PTTGC.BK,PTTGC_TB
+Real Estate,Real Estate—Diversified,QH.BK,QH.BK,QH_TB
+Utilities,Utilities—Regulated Electric,RATCH.BK,RATCH.BK,RATCH_TB
+Consumer Defensive,Packaged Foods,RBF.BK,RBF.BK,RBF_TB
+Communication Services,Entertainment,RS.BK,RS.BK,RS_TB
+Financial Services,Credit Services,SAWAD.BK,SAWAD.BK,SAWAD_TB
+Financial Services,Banks—Regional,SCB.BK,SCB.BK,SCB_TB
+Basic Materials,Specialty Chemicals,SCC.BK,SCC.BK,SCC_TB
+Consumer Cyclical,Packaging & Containers,SCGP.BK,SCGP.BK,SCGP_TB
+Real Estate,Real Estate—Development,SPALI.BK,SPALI.BK,SPALI_TB
+Energy,Oil & Gas Refining & Marketing,SPRC.BK,SPRC.BK,SPRC_TB
+Consumer Cyclical,Auto Parts,STA.BK,STA.BK,STA_TB
+Industrials,Engineering & Construction,STEC.BK,STEC.BK,STEC_TB
+Utilities,Utilities—Renewable,SUPER.BK,SUPER.BK,SUPER_TB
+Basic Materials,Building Materials,TASCO.BK,TASCO.BK,TASCO_TB
+Financial Services,Financial Conglomerates,TCAP.BK,TCAP.BK,TCAP_TB
+Financial Services,Credit Services,THANI.BK,THANI.BK,THANI_TB
+Financial Services,Banks—Regional,TISCO.BK,TISCO.BK,TISCO_TB
+Consumer Defensive,Packaged Foods,TKN.BK,TKN.BK,TKN_TB
+Financial Services,Banks—Regional,TMB.BK,TMB.BK,TMB_TB
+Basic Materials,Specialty Chemicals,TOA.BK,TOA.BK,TOA_TB
+Energy,Oil & Gas Refining & Marketing,TOP.BK,TOP.BK,TOP_TB
+Utilities,Utilities—Renewable,TPIPP.BK,TPIPP.BK,TPIPP_TB
+Financial Services,Insurance Brokers,TQM.BK,TQM.BK,TQM_TB
+Communication Services,Telecom Services,TRUE.BK,TRUE.BK,TRUE_TB
+Utilities,Utilities—Regulated Water,TTW.BK,TTW.BK,TTW_TB
+Consumer Defensive,Packaged Foods,TU.BK,TU.BK,TU_TB
+Consumer Defensive,Packaged Foods,TVO.BK,TVO.BK,TVO_TB
+Communication Services,Advertising Agencies,VGI.BK,VGI.BK,VGI_TB
+Real Estate,Real Estate Services,WHA.BK,WHA.BK,WHA_TB
+Utilities,Utilities—Regulated Water,WHAUP.BK,WHAUP.BK,WHAUP_TB
+Financial Services,Banks—Regional,BAY.BK,BAY.BK,BAY_TB
+Financial Services,Insurance—Property & Casualty,BKI.BK,BKI.BK,BKI_TB
+Financial Services,Insurance—Life,BLA.BK,BLA.BK,BLA_TB
+Financial Services,Banks—Regional,CIMBT.BK,CIMBT.BK,CIMBT_TB
+Technology,Electronics & Computer Distribution,CSS.BK,CSS.BK,CSS_TB
+Utilities,Utilities—Regulated Water,EASTW.BK,EASTW.BK,EASTW_TB
+Consumer Cyclical,Auto Parts,FPI.BK,FPI.BK,FPI_TB
+Real Estate,Real Estate—Development,FPT.BK,FPT.BK,FPT_TB
+Communication Services,Entertainment,GRAMMY.BK,GRAMMY.BK,GRAMMY_TB
+Consumer Cyclical,Auto Parts,IRC.BK,IRC.BK,IRC_TB
+Real Estate,REIT—Diversified,LHSC.BK,LHSC.BK,LHSC_TB
+Consumer Cyclical,Restaurants,M.BK,M.BK,M_TB
+Consumer Cyclical,Department Stores,MAKRO.BK,MAKRO.BK,MAKRO_TB
+Communication Services,Broadcasting,MCOT.BK,MCOT.BK,MCOT_TB
+Consumer Defensive,Packaged Foods,PRG.BK,PRG.BK,PRG_TB
+Industrials,Waste Management,PRO.BK,PRO.BK,PRO_TB
+Healthcare,Medical Care Facilities,RAM.BK,RAM.BK,RAM_TB
+Real Estate,Real Estate—Development,SA.BK,SA.BK,SA_TB
+Consumer Cyclical,Restaurants,SNP.BK,SNP.BK,SNP_TB
+Utilities,Utilities—Renewable,SPCG.BK,SPCG.BK,SPCG_TB
+Real Estate,Real Estate Services,SPI.BK,SPI.BK,SPI_TB
+Consumer Defensive,Food Distribution,SSF.BK,SSF.BK,SSF_TB
+Healthcare,Medical Care Facilities,SVH.BK,SVH.BK,SVH_TB
+Consumer Defensive,Farm Products,TFG.BK,TFG.BK,TFG_TB
+Consumer Defensive,Packaged Foods,TFMAMA.BK,TFMAMA.BK,TFMAMA_TB
+Industrials,Airlines,THAI.BK,THAI.BK,THAI_TB
+Consumer Cyclical,Packaging & Containers,TPAC.BK,TPAC.BK,TPAC_TB
+Industrials,Engineering & Construction,TRC.BK,TRC.BK,TRC_TB
+Healthcare,Medical Care Facilities,VIBHA.BK,VIBHA.BK,VIBHA_TB
+Communication Services,Broadcasting,WAVE.BK,WAVE.BK,WAVE_TB
+Financial Services,Financial Conglomerates,TCAP.BK,TCAP.BK,TCAP_TB
+Industrials,Airlines,AAV.BK,AAV.BK,AAV_TB
+Consumer Cyclical,Auto Parts,AH.BK,AH.BK,AH_TB
+Technology,Electronic Components,AI.BK,AI.BK,AI_TB
+Technology,Information Technology Services,AIT.BK,AIT.BK,AIT_TB
+Consumer Cyclical,Packaging & Containers,AJ.BK,AJ.BK,AJ_TB
+Technology,Communication Equipment,ALT.BK,ALT.BK,ALT_TB
+Financial Services,Credit Services,AMANAH.BK,AMANAH.BK,AMANAH_TB
+Real Estate,Real Estate—Development,ANAN.BK,ANAN.BK,ANAN_TB
+Consumer Defensive,Packaged Foods,ASIAN.BK,ASIAN.BK,ASIAN_TB
+Financial Services,Credit Services,ASK.BK,ASK.BK,ASK_TB
+Financial Services,Capital Markets,ASP.BK,ASP.BK,ASP_TB
+Industrials,Airlines,BA.BK,BA.BK,BA_TB
+Industrials,Airports & Air Services,BAFS.BK,BAFS.BK,BAFS_TB
+Consumer Defensive,Household & Personal Products,BEAUTY.BK,BEAUTY.BK,BEAUTY_TB
+Consumer Cyclical,Packaging & Containers,BGC.BK,BGC.BK,BGC_TB
+Industrials,Engineering & Construction,BJCHI.BK,BJCHI.BK,BJCHI_TB
+Consumer Defensive,Household & Personal Products,DDD.BK,DDD.BK,DDD_TB
+Industrials,Building Products & Equipment,DRT.BK,DRT.BK,DRT_TB
+Healthcare,Medical Care Facilities,EKH.BK,EKH.BK,EKH_TB
+Utilities,Utilities—Renewable,EP.BK,EP.BK,EP_TB
+Consumer Cyclical,Lodging,ERW.BK,ERW.BK,ERW_TB
+Basic Materials,Chemicals,GGC.BK,GGC.BK,GGC_TB
+Consumer Cyclical,Auto Parts,HFT.BK,HFT.BK,HFT_TB
+Consumer Defensive,Beverages—Non-Alcoholic,HTC.BK,HTC.BK,HTC_TB
+Technology,Software—Application,HUMAN.BK,HUMAN.BK,HUMAN_TB
+Consumer Defensive,Beverages—Non-Alcoholic,ICHI.BK,ICHI.BK,ICHI_TB
+Industrials,Integrated Freight & Logistics,III.BK,III.BK,III_TB
+Technology,Communication Equipment,ILINK.BK,ILINK.BK,ILINK_TB
+Consumer Cyclical,"Furnishings, Fixtures & Appliances",ILM.BK,ILM.BK,ILM_TB
+Industrials,Engineering & Construction,ITD.BK,ITD.BK,ITD_TB
+Real Estate,Real Estate—Development,JCK.BK,JCK.BK,JCK_TB
+Communication Services,Broadcasting,JKN.BK,JKN.BK,JKN_TB
+Industrials,Integrated Freight & Logistics,JWD.BK,JWD.BK,JWD_TB
+Consumer Defensive,Household & Personal Products,KAMART.BK,KAMART.BK,KAMART_TB
+Financial Services,Capital Markets,KGI.BK,KGI.BK,KGI_TB
+Consumer Defensive,Confectioners,KSL.BK,KSL.BK,KSL_TB
+Real Estate,Real Estate—Development,LALIN.BK,LALIN.BK,LALIN_TB
+Energy,Thermal Coal,LANNA.BK,LANNA.BK,LANNA_TB
+Industrials,Conglomerates,LOXLEY.BK,LOXLEY.BK,LOXLEY_TB
+Healthcare,Medical Care Facilities,LPH.BK,LPH.BK,LPH_TB
+Real Estate,Real Estate—Development,LPN.BK,LPN.BK,LPN_TB
+Communication Services,Advertising Agencies,MACO.BK,MACO.BK,MACO_TB
+Consumer Cyclical,Apparel Manufacturing,MC.BK,MC.BK,MC_TB
+Basic Materials,Steel,MCS.BK,MCS.BK,MCS_TB
+Real Estate,Real Estate—Development,MK.BK,MK.BK,MK_TB
+Communication Services,Entertainment,MONO.BK,MONO.BK,MONO_TB
+Basic Materials,Specialty Chemicals,NER.BK,NER.BK,NER_TB
+Technology,Electronic Components,NEX.BK,NEX.BK,NEX_TB
+Real Estate,Real Estate—Development,NOBLE.BK,NOBLE.BK,NOBLE_TB
+Industrials,Integrated Freight & Logistics,NYT.BK,NYT.BK,NYT_TB
+Real Estate,Real Estate—Development,PF.BK,PF.BK,PF_TB
+Real Estate,Real Estate Services,PLAT.BK,PLAT.BK,PLAT_TB
+Consumer Defensive,Food Distribution,PM.BK,PM.BK,PM_TB
+Healthcare,Medical Care Facilities,PR9.BK,PR9.BK,PR9_TB
+Industrials,Marine Shipping,PSL.BK,PSL.BK,PSL_TB
+Industrials,Engineering & Construction,PYLON.BK,PYLON.BK,PYLON_TB
+Industrials,Marine Shipping,RCL.BK,RCL.BK,RCL_TB
+Healthcare,Medical Care Facilities,RJH.BK,RJH.BK,RJH_TB
+Real Estate,Real Estate—Development,RML.BK,RML.BK,RML_TB
+Utilities,Utilities—Independent Power Producers,ROJNA.BK,ROJNA.BK,ROJNA_TB
+Healthcare,Medical Care Facilities,RPH.BK,RPH.BK,RPH_TB
+Real Estate,Real Estate—Development,S.BK,S.BK,S_TB
+Industrials,Rental & Leasing Services,S11.BK,S11.BK,S11_TB
+Consumer Cyclical,Apparel Manufacturing,SABINA.BK,SABINA.BK,SABINA_TB
+Communication Services,Telecom Services,SAMART.BK,SAMART.BK,SAMART_TB
+Communication Services,Telecom Services,SAMTEL.BK,SAMTEL.BK,SAMTEL_TB
+Consumer Defensive,Beverages—Non-Alcoholic,SAPPE.BK,SAPPE.BK,SAPPE_TB
+Consumer Cyclical,Auto Parts,SAT.BK,SAT.BK,SAT_TB
+Real Estate,Real Estate—Diversified,SC.BK,SC.BK,SC_TB
+Industrials,Engineering & Construction,SEAFCO.BK,SEAFCO.BK,SEAFCO_TB
+Real Estate,Real Estate—Development,SENA.BK,SENA.BK,SENA_TB
+Real Estate,Real Estate Services,SF.BK,SF.BK,SF_TB
+Consumer Cyclical,Packaging & Containers,SFLEX.BK,SFLEX.BK,SFLEX_TB
+Consumer Cyclical,Resorts & Casinos,SHR.BK,SHR.BK,SHR_TB
+Technology,Consumer Electronics,SINGER.BK,SINGER.BK,SINGER_TB
+Real Estate,Real Estate—Development,SIRI.BK,SIRI.BK,SIRI_TB
+Technology,Electronics & Computer Distribution,SIS.BK,SIS.BK,SIS_TB
+Industrials,Metal Fabrication,SMPC.BK,SMPC.BK,SMPC_TB
+Technology,Electronic Components,SNC.BK,SNC.BK,SNC_TB
+Industrials,Engineering & Construction,SRICHA.BK,SRICHA.BK,SRICHA_TB
+Utilities,Utilities—Renewable,SSP.BK,SSP.BK,SSP_TB
+Consumer Cyclical,Auto Parts,STANLY.BK,STANLY.BK,STANLY_TB
+Industrials,Metal Fabrication,STPI.BK,STPI.BK,STPI_TB
+Energy,Oil & Gas Refining & Marketing,SUSCO.BK,SUSCO.BK,SUSCO_TB
+Technology,Electronics & Computer Distribution,SYNEX.BK,SYNEX.BK,SYNEX_TB
+Technology,Communication Equipment,THCOM.BK,THCOM.BK,THCOM_TB
+Financial Services,Insurance—Reinsurance,THRE.BK,THRE.BK,THRE_TB
+Financial Services,Insurance—Property & Casualty,TIP.BK,TIP.BK,TIP_TB
+Consumer Defensive,Beverages—Non-Alcoholic,TIPCO.BK,TIPCO.BK,TIPCO_TB
+Industrials,Specialty Business Services,TKS.BK,TKS.BK,TKS_TB
+Industrials,Engineering & Construction,TRITN.BK,TRITN.BK,TRITN_TB
+Utilities,Utilities—Renewable,TSE.BK,TSE.BK,TSE_TB
+Industrials,Conglomerates,TTA.BK,TTA.BK,TTA_TB
+Consumer Defensive,Packaged Foods,TWPC.BK,TWPC.BK,TWPC_TB
+Real Estate,Real Estate—Development,U.BK,U.BK,U_TB
+Basic Materials,Chemicals,UAC.BK,UAC.BK,UAC_TB
+Industrials,Engineering & Construction,UNIQ.BK,UNIQ.BK,UNIQ_TB
+Basic Materials,Paper & Paper Products,UTP.BK,UTP.BK,UTP_TB
+Real Estate,Real Estate—Development,UV.BK,UV.BK,UV_TB
+Healthcare,Medical Care Facilities,VIH.BK,VIH.BK,VIH_TB
+Industrials,Integrated Freight & Logistics,WICE.BK,WICE.BK,WICE_TB
+Communication Services,Broadcasting,WORK.BK,WORK.BK,WORK_TB
+Consumer Cyclical,Restaurants,ZEN.BK,ZEN.BK,ZEN_TB
