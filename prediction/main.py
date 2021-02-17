@@ -1,18 +1,19 @@
-from dataset import Dataset, StockDataset
+from dataset import Dataset
 from trainer import Trainer
 from TSGNN import TSGNN
+from evaluator import Evaluator
 import config
-
-from torch.utils.data import DataLoader
 
 
 if __name__ == '__main__':
     stock = Dataset(config)
-    (X_train, y_train), (X_test, y_test), (X_valid, y_valid) = stock.get_dataset()
-    train_dataset = StockDataset(X_train, y_train)
+    neighbors = stock.sample_neighbors(to_tensor=True)
+    model = TSGNN(config, neighbors, stock.rel_num)
+    print(model)
+    evaluator = Evaluator(config)
+    trainer = Trainer(model, stock, config, evaluator)
+    # print(trainer.X_train)
 
     # train
-    model = TSGNN(config)
-    trainer = Trainer(model, train_dataset, config)
-    trainer.train_epoch(DataLoader(train_dataset))
-
+    trainer.train()
+    # print(trainer.X_train.shape)
