@@ -13,6 +13,13 @@ class Trainer:
         self.config = config
         self.evaluator = evaluator
 
+        self.cost_hist = []
+        self.train_acc_hist = []
+        self.valid_acc_hist = []
+
+        self.train_f1_hist = []
+        self.valid_f1_hist = []
+
         (self.X_train, self.y_train), (self.X_test, self.y_test), (self.X_valid, self.y_valid) = data.get_dataset()
         self.dataset = StockDataset(self.X_train, self.y_train)
         self.data_loader = DataLoader(self.dataset, shuffle=config.shuffle_batch)
@@ -23,15 +30,11 @@ class Trainer:
         # Create folder
         os.mkdir(os.path.join(self.config.checkpoint_dir, self.config.directory))
 
-        cost_hist = []
-        train_acc_list = []
-        valid_acc_list = []
-        # best_loss = 1000000
-        # stopping_criteria = 0
+        best_loss = 1000000
+        stopping_criteria = 0
 
         for epoch in range(self.config.epochs):
             loss = self.train_epoch()
-            cost_hist.append(loss)
 
             self.model.eval()
             train_pred_list = []
@@ -58,41 +61,56 @@ class Trainer:
                 valid_pred_list.extend(valid_preds.cpu().detach().tolist())
                 valid_label_list.extend(label.cpu().detach().tolist())
 
-            grad = []
             # Retrieve gradient
-            for p in self.model.parameters():
-                grad.append(float(p.grad.norm().cpu().detach()))
-            print('Epoch {:3d}, Avg. grad: {:.6f}'.format(epoch, sum(grad) / len(grad)))
+            # grad = []
+            # for p in self.model.parameters():
+            #     grad.append(float(p.grad.norm().cpu().detach()))
+            # print('Epoch {:3d}, Avg. grad: {:.6f}'.format(epoch, sum(grad) / len(grad)))
 
-            train_acc = self.evaluator.metrics(train_pred_list, train_label_list)
-            valid_acc = self.evaluator.metrics(valid_pred_list, valid_label_list)
-            train_acc_list.append(train_acc)
-            valid_acc_list.append(valid_acc)
+            train_acc, train_f1 = self.evaluator.metrics(train_pred_list, train_label_list)
+            valid_acc, valid_f1 = self.evaluator.metrics(valid_pred_list, valid_label_list)
+
+            self.cost_hist.append(loss)
+            self.train_acc_hist.append(train_acc)
+            self.valid_acc_hist.append(valid_acc)
+            self.train_f1_hist.append(train_f1)
+            self.valid_f1_hist.append(valid_f1)
 
             # Early stopping
-            # if loss < best_loss:
-            #     stopping_criteria = 0
-            #     best_loss = loss
-            #     self.model.save_checkpoint()
-            #
-            # if best_loss - loss < self.config.early_stopping_threshold:
-            #     stopping_criteria += 1
-            #
-            # if stopping_criteria >= self.config.early_stopping_period:
-            #     print('Early stopping occurs')
-            #     self.model.save_checkpoint()
-            #     print('Last epoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, np.mean(cost_hist), train_acc * 100, valid_acc * 100))
-            #     break
+            if best_loss - loss >= self.config.early_stopping_threshold:
+                print('\nEpoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch + 1, np.mean(
+                    self.cost_hist), train_acc * 100, valid_acc * 100))
+                print(
+                    'Example {}: probs = {}, label = {}'.format(sample_index, valid_probs[sample_index].cpu().detach(),
+                                                                label[sample_index]))
+                print(np.unique(train_pred_list, return_counts=True))
+                print('---------------------------------------')
+                stopping_criteria = 0
+                best_loss = loss
+                self.model.save_checkpoint()
+
+            else:
+                stopping_criteria += 1
+                print('Model not improving for {} epoch(s).'.format(stopping_criteria))
+
+            if stopping_criteria >= self.config.early_stopping_period:
+                print('Early stopping occurs')
+                print('Last epoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, np.mean(self.cost_hist), train_acc * 100, valid_acc * 100))
+                break
 
             if (epoch+1) % self.config.print_log == 0:
                 sample_index = np.random.choice(range(label.shape[0]))
-                print('\nEpoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, np.mean(cost_hist), train_acc * 100, valid_acc * 100))
+                print('\nEpoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, np.mean(self.cost_hist), train_acc * 100, valid_acc * 100))
                 print('Example {}: probs = {}, label = {}'.format(sample_index, valid_probs[sample_index].cpu().detach(), label[sample_index]))
                 print(np.unique(train_pred_list, return_counts=True))
                 print('---------------------------------------')
 
+            if (epoch+1) == self.config.epochs:
+                self.model.save_checkpoint()
+                print('Max iterations reached.')
+
     def train_epoch(self):
-        cost_hist = []
+        tmp_cost_hist = []
         for input_hist, label in self.data_loader:
             # Squeeze one dim
             input_hist = torch.squeeze(input_hist, dim=0).type(torch.float32).to(self.model.device)
@@ -110,8 +128,11 @@ class Trainer:
             cost.backward()
             self.model.optimizer.step()
 
-            # for p in self.model.parameters():
-            #     print(p.grad)
+            tmp_cost_hist.append(cost.cpu().detach())
+        return np.mean(tmp_cost_hist)
 
-            cost_hist.append(cost.cpu().detach())
-        return np.mean(cost_hist)
+    def get_model(self):
+        return self.model
+    
+    def get_hist(self):
+        return self.cost_hist, self.train_acc_hist, self.valid_acc_hist, self.train_f1_hist, self.valid_f1_hist

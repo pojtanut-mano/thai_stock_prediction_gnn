@@ -40,6 +40,7 @@ class TSGNN(nn.Module):
         else:
             self.fc1 = nn.Linear(in_features=config.lstm_hidden_dims,
                                  out_features=1)
+        self.softmax = nn.Softmax(dim=1)
 
         # Utils
         if config.optimizer == 'Adam':
@@ -57,7 +58,7 @@ class TSGNN(nn.Module):
         self.to(self.device)
 
         # Weight init
-        self.apply(self.weight_init)
+        # self.apply(self.weight_init)
 
         # Clip gradient
         if config.clip_grad > 0:
@@ -77,6 +78,8 @@ class TSGNN(nn.Module):
 
         # Prediction layer
         preds = self.fc1(final_state_embedding)
+        if self.config.target_type == 'classification':
+            preds = self.softmax(preds)
 
         return preds
 

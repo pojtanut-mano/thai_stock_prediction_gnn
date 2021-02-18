@@ -34,16 +34,24 @@ lstm_dropout = 0.4
 
 lr = 0.001
 loss_function = 'MSE'  # MSE, MSE_rank or entropy
-optimizer = 'Adam'
-optimizer_weight_decay = 1e-10
+optimizer = 'RMSprop'
+optimizer_weight_decay = 1e-8
 batch_size = 32
 clip_grad = 0
 
-early_stopping_period = 5
-early_stopping_threshold = 1e-10
+early_stopping_period = 30
+early_stopping_threshold = 1e-8
 
 
 # training config
 epochs = 300
 shuffle_batch = True
 print_log = 10
+
+# Export config
+hist_dir = 'hist'
+raw_output_dir = 'raw_output'
+report_dir = 'report'
+confusion_mat_dir = 'conf_mat'
+
+fig_size = (10, 10)

@@ -62,8 +62,8 @@ class Dataset:
             self.std = []
 
         for ticker in ordered_tickers:
-            df = pd.read_csv(os.path.join(self.mkt_dir, '{}.csv'.format(ticker)))
-            df = df[self.feature_list]
+            raw_df = pd.read_csv(os.path.join(self.mkt_dir, '{}.csv'.format(ticker)))
+            df = raw_df[self.feature_list]
             if self.config.target_type == 'classification':  # 0 = down, 1 = neutral, 2 = up
                 self.train_label.append(df.iloc[train_target_start_idx:valid_start_idx, 0].apply(self.classify).values)
                 self.valid_label.append(df.iloc[valid_start_idx: test_start_idx, 0].apply(self.classify).values)
@@ -88,6 +88,12 @@ class Dataset:
             self.train_set.append(df.iloc[:valid_start_idx - 1].values)
             self.valid_set.append(df.iloc[valid_start_idx - self.lookback:test_start_idx - 1].values)
             self.test_set.append(df.iloc[test_start_idx - self.lookback:test_start_idx + self.config.test_size - 1].values)
+
+        # Save date for exporting
+        date = raw_df['Date']
+        self.train_date = date[train_target_start_idx:valid_start_idx].reset_index(drop=True)
+        self.valid_date = date[valid_start_idx: test_start_idx].reset_index(drop=True)
+        self.test_date = date[test_start_idx:test_start_idx + self.config.test_size].reset_index(drop=True)
 
         # if self.config.scale_type == 'MinMax':
         #     self.params_mem = pd.DataFrame({'tickers': ordered_tickers, 'min_value': self.min,
@@ -115,6 +121,8 @@ class Dataset:
                 "training label shape: {}\nvalid label shape: {}\ntest label shape: {}\n".format(self.train_label.shape,
                                                                                                  self.valid_label.shape,
                                                                                                  self.test_label.shape))
+
+        self.tickers = ordered_tickers
 
     def create_batch(self, size, data):
         # create new training set
