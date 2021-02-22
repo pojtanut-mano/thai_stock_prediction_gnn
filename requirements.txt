@@ -1,0 +1,7 @@
+torch~=1.7.1+cu110
+numpy~=1.20.0
+pandas~=1.2.1
+matplotlib~=3.3.4
+torchviz~=0.0.1
+sklearn~=0.0
+scikit-learn~=0.24.1

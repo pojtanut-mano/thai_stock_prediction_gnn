@@ -26,7 +26,7 @@ lookback = 50
 train_size = 250
 valid_size = 50
 test_size = 100
-train_start = lookback
+train_start = lookback + 100
 
 target_type = 'classification'  # classification or regression
 num_sample_neighbors = 25
