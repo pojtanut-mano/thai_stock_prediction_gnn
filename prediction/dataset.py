@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import torch
+import matplotlib.pyplot as plt
 
 import os
 import pickle
@@ -50,17 +51,6 @@ class Dataset:
         valid_start_idx = self.lookback + self.config.train_size
         test_start_idx = valid_start_idx + self.config.valid_size
 
-        # Scale
-        if self.config.scale_type == 'MinMax':
-            print("Initialize MinMax scaling")
-            self.min = []
-            self.max = []
-
-        elif self.config.scale_type == 'normalize':
-            print("Initialize normalization scaling")
-            self.mean = []
-            self.std = []
-
         for ticker in ordered_tickers:
             raw_df = pd.read_csv(os.path.join(self.mkt_dir, '{}.csv'.format(ticker)))
             df = raw_df[self.feature_list]
@@ -69,35 +59,23 @@ class Dataset:
                 self.valid_label.append(df.iloc[valid_start_idx: test_start_idx, 0].apply(self.classify).values)
                 self.test_label.append(
                     df.iloc[test_start_idx:test_start_idx + self.config.test_size, 0].apply(self.classify).values)
-
             else:
                 self.train_label.append(df.iloc[train_target_start_idx:valid_start_idx].values)
                 self.valid_label.append(df.iloc[valid_start_idx: test_start_idx].values)
                 self.test_label.append(df.iloc[test_start_idx:test_start_idx + self.config.test_size].values)
-
-            if self.config.scale_type == 'MinMax':
-                df, min_, max_ = self.minmax_scaler(df)
-                self.min.append('{}'.format(min_))
-                self.max.append('{}'.format(max_))
-            elif self.config.scale_type == 'normalize':
-                df, mean_, std_ = self.normalize(df)
-                self.mean.append('{}'.format(mean_))
-                self.std.append('{}'.format(std_))
 
             # Append dataset
             self.train_set.append(df.iloc[:valid_start_idx - 1].values)
             self.valid_set.append(df.iloc[valid_start_idx - self.lookback:test_start_idx - 1].values)
             self.test_set.append(df.iloc[test_start_idx - self.lookback:test_start_idx + self.config.test_size - 1].values)
 
+        self.main_df = np.concatenate((np.stack(self.train_set, axis=0), np.stack(self.valid_set, axis=0), np.stack(self.test_set, axis=0)), axis=1).ravel()
+
         # Save date for exporting
         date = raw_df['Date']
         self.train_date = date[train_target_start_idx:valid_start_idx].reset_index(drop=True)
         self.valid_date = date[valid_start_idx: test_start_idx].reset_index(drop=True)
         self.test_date = date[test_start_idx:test_start_idx + self.config.test_size].reset_index(drop=True)
-
-        # if self.config.scale_type == 'MinMax':
-        #     self.params_mem = pd.DataFrame({'tickers': ordered_tickers, 'min_value': self.min,
-        #                                     'max_value': self.max})
 
         # Convert train set, valid set, test set to
         # shape: (number of samples, number of companies, lookback, feature(s))
@@ -108,6 +86,38 @@ class Dataset:
         self.train_set = np.swapaxes(self.train_set, 1, 2)
         self.valid_set = np.swapaxes(self.valid_set, 1, 2)
         self.test_set = np.swapaxes(self.test_set, 1, 2)
+        if self.config.limiter:
+            np.clip(self.train_set, -0.2, 0.2, out=self.train_set)
+            np.clip(self.valid_set, -0.2, 0.2, out=self.valid_set)
+            np.clip(self.test_set, -0.2, 0.2, out=self.test_set)
+
+        if self.config.scale_type == 'MinMax':
+            print("Initialize MinMax scaling")
+            min_, max_ = self.minmax_scaler(self.main_df)
+            print('Min value: {}, max value: {}\n'.format(min_, max_))
+            self.train_set = (self.train_set - min_) / (max_ - min_)
+            self.valid_set = (self.valid_set - min_) / (max_ - min_)
+            self.test_set = (self.test_set - min_) / (max_ - min_)
+        elif self.config.scale_type == 'normalize':
+            print("Initialize normalization scaling")
+            mean_, std_ = self.normalize(self.main_df)
+            print('Mean: {}, std: {}\n'.format(mean_, std_))
+            self.train_set = (self.train_set - mean_) / std_
+            self.valid_set = (self.valid_set - mean_) / std_
+            self.test_set = (self.test_set - mean_) / std_
+        elif self.config.scale_type == 'mean_depre':
+            print('Initialize mean depreciation')
+            mean_ = self.mean_depreciation(self.main_df)
+            print('Mean: {}\n'.format(mean_))
+            self.train_set = self.train_set - mean_
+            self.valid_set = self.valid_set - mean_
+            self.test_set = self.test_set - mean_
+
+        # self.input_distribution(self.train_set.ravel(), 'train')
+        # self.input_distribution(self.valid_set.ravel(), 'valid')
+        # self.input_distribution(self.test_set.ravel(), 'test')
+        # print(np.where(self.train_set == np.max(self.train_set.ravel())), np.max(self.train_set.ravel()))
+        # print(self.train_set.shape)
         if self.config.verbose >= 1:
             print("training set shape: {}\nvalid set shape: {}\ntest set shape: {}\n".format(self.train_set.shape,
                                                                                              self.valid_set.shape,
@@ -153,12 +163,16 @@ class Dataset:
     def minmax_scaler(self, df):
         min_ = df.min()
         max_ = df.max()
-        return (df - min_) / (max_ - min_), min_.values.tolist(), max_.values.tolist()
+        return min_, max_
 
     def normalize(self, df):
         mean_ = df.mean()
         std_ = df.std()
-        return (df - mean_) / std_, mean_.values.tolist(), std_.values.tolist()
+        return mean_, std_
+
+    def mean_depreciation(self, df):
+        mean_ = df.mean()
+        return mean_.values
 
     def sample_neighbors(self, to_tensor):
         num_samples = self.config.num_sample_neighbors
@@ -200,6 +214,15 @@ class Dataset:
         print(self.train_set[0][0], '\n\n', self.train_set[1][0])
         print('Target of lag 0 and lag1')
         print(self.train_label[0][0], self.train_label[1][0])
+
+    def input_distribution(self, df, plot_name):
+        fig, ax = plt.subplots(1, 1, figsize=self.config.fig_size)
+        ax.hist(df, bins=50, range=(np.min(df) - 0.005, np.max(df) + 0.05))
+        ax.set_xlabel('return')
+        ax.set_xlim((np.min(df) - 0.005, np.max(df) + 0.05))
+        plt.title(plot_name + ' distribution')
+        plt.savefig(os.path.join(self.config.checkpoint_dir, self.config.directory, plot_name + '_distribution.png'))
+        plt.clf()
 
 
 class StockDataset(Dataset):

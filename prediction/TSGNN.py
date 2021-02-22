@@ -1,6 +1,7 @@
 import torch
 from torch import nn, optim
 from torch.nn.utils import clip_grad_norm_
+from torch.optim.lr_scheduler import StepLR
 import numpy as np
 import os
 
@@ -15,6 +16,9 @@ class TSGNN(nn.Module):
         self.rel_num = rel_num
         self.checkpoint_directory = config.checkpoint_dir
         self.checkpoint_file = os.path.join(self.checkpoint_directory, config.directory, config.name)
+
+        # reproducibility
+        self.init_seed()
 
         if config.lstm_layer > 1:
             self.lstm = nn.LSTM(config.lstm_input_dims, config.lstm_hidden_dims,
@@ -51,6 +55,10 @@ class TSGNN(nn.Module):
                                            weight_decay=config.optimizer_weight_decay)
         if config.target_type == 'classification':
             self.loss = nn.CrossEntropyLoss()
+        else:
+            self.loss = nn.MSELoss()
+
+        self.leaky_relu = nn.LeakyReLU()
 
         # Device
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -58,20 +66,24 @@ class TSGNN(nn.Module):
         self.to(self.device)
 
         # Weight init
-        # self.apply(self.weight_init)
+        self.apply(self.weight_init)
 
         # Clip gradient
         if config.clip_grad > 0:
             clip_grad_norm_(self.parameters(), config.clip_grad)
 
+        # lr scheduler
+        self.scheduler = StepLR(self.optimizer, step_size=self.config.step_size,
+                                gamma=self.config.gamma)
+
     def forward(self, stock_hist):
         _, (state_embedding, _) = self.lstm(stock_hist)
         state_embedding = torch.squeeze(state_embedding, dim=0)
+        # print(torch.isnan(state_embedding).any())
 
         # Padding 0 as a placeholder for nodes that don't have relation
         state_embedding = torch.cat((torch.zeros(1, self.config.lstm_hidden_dims).to(self.device),
                                      state_embedding), 0)
-        # print(state_embedding)
 
         updated_state_embedding = self.graph_attention_layer(state_embedding)
         final_state_embedding = updated_state_embedding + state_embedding[1:]
@@ -161,3 +173,11 @@ class TSGNN(nn.Module):
     def load_checkpoint(self):
         print('... loading checkpoint ...')
         self.load_state_dict(torch.load(self.checkpoint_file))
+
+    def load(self):
+        print('... loading from path ...')
+        self.load_state_dict(torch.load(self.config.path))
+
+    def init_seed(self):
+        np.random.seed(self.config.seed)
+        torch.manual_seed(self.config.seed)
