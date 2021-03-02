@@ -9,7 +9,7 @@ EPSILON = 1e-10
 
 
 class TSGNN(nn.Module):
-    def __init__(self, config, neighbors, rel_num):
+    def __init__(self, config, neighbors, rel_num, hidden_dims, optimizer, weight_decay, lr):
         super(TSGNN, self).__init__()
         self.config = config
         self.neighbors = neighbors
@@ -17,42 +17,44 @@ class TSGNN(nn.Module):
         self.checkpoint_directory = config.checkpoint_dir
         self.checkpoint_file = os.path.join(self.checkpoint_directory, config.directory, config.name)
 
+        self.hidden_dims = hidden_dims
+
         # reproducibility
         self.init_seed()
 
         if config.lstm_layer > 1:
-            self.lstm = nn.LSTM(config.lstm_input_dims, config.lstm_hidden_dims,
+            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
                                 config.lstm_layer, dropout=config.lstm_dropout)
         else:
-            self.lstm = nn.LSTM(config.lstm_input_dims, config.lstm_hidden_dims,
+            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
                                 config.lstm_layer)
 
         # Attention layer functions
-        self.fc_att = nn.Linear(in_features=2 * config.lstm_hidden_dims + neighbors.shape[0],
+        self.fc_att = nn.Linear(in_features=2 * hidden_dims + neighbors.shape[0],
                                 out_features=1)
         self.att_softmax = nn.Softmax(dim=2)
 
         # Relation layer functions
-        self.fc_rel_att = nn.Linear(in_features=config.lstm_hidden_dims + neighbors.shape[0],
+        self.fc_rel_att = nn.Linear(in_features=hidden_dims + neighbors.shape[0],
                                     out_features=1)
         self.rel_att_softmax = nn.Softmax(dim=0)
 
         # Fully-connected layer
         if config.target_type == 'classification':
-            self.fc1 = nn.Linear(in_features=config.lstm_hidden_dims,
+            self.fc1 = nn.Linear(in_features=hidden_dims,
                                  out_features=3)
         else:
-            self.fc1 = nn.Linear(in_features=config.lstm_hidden_dims,
+            self.fc1 = nn.Linear(in_features=hidden_dims,
                                  out_features=1)
         self.softmax = nn.Softmax(dim=1)
 
         # Utils
-        if config.optimizer == 'Adam':
-            self.optimizer = optim.Adam(params=self.parameters(), lr=config.lr,
-                                        weight_decay=config.optimizer_weight_decay)
+        if optimizer == 'Adam':
+            self.optimizer = optim.Adam(params=self.parameters(), lr=lr,
+                                        weight_decay=weight_decay)
         else:
-            self.optimizer = optim.RMSprop(params=self.parameters(), lr=config.lr,
-                                           weight_decay=config.optimizer_weight_decay)
+            self.optimizer = optim.RMSprop(params=self.parameters(), lr=lr,
+                                           weight_decay=weight_decay)
         if config.target_type == 'classification':
             self.loss = nn.CrossEntropyLoss()
         else:
@@ -82,7 +84,7 @@ class TSGNN(nn.Module):
         # print(torch.isnan(state_embedding).any())
 
         # Padding 0 as a placeholder for nodes that don't have relation
-        state_embedding = torch.cat((torch.zeros(1, self.config.lstm_hidden_dims).to(self.device),
+        state_embedding = torch.cat((torch.zeros(1, self.hidden_dims).to(self.device),
                                      state_embedding), 0)
 
         updated_state_embedding = self.graph_attention_layer(state_embedding)
@@ -181,3 +183,11 @@ class TSGNN(nn.Module):
     def init_seed(self):
         np.random.seed(self.config.seed)
         torch.manual_seed(self.config.seed)
+
+    def save_model(self):
+        print('... saving state ...')
+        return self.state_dict()
+
+    def load_state(self, state):
+        print('Loading best params...')
+        self.load_state_dict(state)

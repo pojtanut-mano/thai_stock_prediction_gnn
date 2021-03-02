@@ -8,12 +8,13 @@ import pickle
 
 
 class Dataset:
-    def __init__(self, config):
+    def __init__(self, config, start_date):
         self.config = config
         self.mkt_dir = config.market_directory
         self.rel_dir = config.relation_directory
         self.feature_list = config.feature_list
         self.lookback = config.lookback
+        self.start_date = start_date
 
         self.train_set, self.test_set, self.valid_set = [], [], []
         self.train_label, self.test_label, self.valid_label = [], [], []
@@ -28,13 +29,13 @@ class Dataset:
 
         # Load adjacency matrices for each relation type
         self.rel_encoding = np.load(os.path.join(self.rel_dir, self.config.adjacency_matrix_path_name))
-        self.rel_encoding = np.swapaxes(self.rel_encoding, 0, 2)
-
-        new_rel_encoding = []
-        for relation in self.rel_encoding:
-            np.fill_diagonal(relation, 0)
-            new_rel_encoding.append(relation)
-        self.rel_encoding = np.stack(new_rel_encoding, axis=0)
+        if self.config.model != 'TRS':
+            self.rel_encoding = np.swapaxes(self.rel_encoding, 0, 2)
+            new_rel_encoding = []
+            for relation in self.rel_encoding:
+                np.fill_diagonal(relation, 0)
+                new_rel_encoding.append(relation)
+            self.rel_encoding = np.stack(new_rel_encoding, axis=0)
 
         self.neighbors = []
         for adj_mat in self.rel_encoding:
@@ -47,8 +48,8 @@ class Dataset:
 
         print('Adjacency matrix shape: {}\n'.format(self.rel_encoding.shape))
 
-        train_target_start_idx = self.lookback
-        valid_start_idx = self.lookback + self.config.train_size
+        train_target_start_idx = self.start_date
+        valid_start_idx = train_target_start_idx + self.config.train_size
         test_start_idx = valid_start_idx + self.config.valid_size
 
         for ticker in ordered_tickers:
@@ -60,12 +61,12 @@ class Dataset:
                 self.test_label.append(
                     df.iloc[test_start_idx:test_start_idx + self.config.test_size, 0].apply(self.classify).values)
             else:
-                self.train_label.append(df.iloc[train_target_start_idx:valid_start_idx].values)
-                self.valid_label.append(df.iloc[valid_start_idx: test_start_idx].values)
-                self.test_label.append(df.iloc[test_start_idx:test_start_idx + self.config.test_size].values)
+                self.train_label.append(raw_df[self.config.reg_target_col].iloc[train_target_start_idx:valid_start_idx].values)
+                self.valid_label.append(raw_df[self.config.reg_target_col].iloc[valid_start_idx: test_start_idx].values)
+                self.test_label.append(raw_df[self.config.reg_target_col].iloc[test_start_idx:test_start_idx + self.config.test_size].values)
 
             # Append dataset
-            self.train_set.append(df.iloc[:valid_start_idx - 1].values)
+            self.train_set.append(df.iloc[train_target_start_idx - self.lookback:valid_start_idx - 1].values)
             self.valid_set.append(df.iloc[valid_start_idx - self.lookback:test_start_idx - 1].values)
             self.test_set.append(df.iloc[test_start_idx - self.lookback:test_start_idx + self.config.test_size - 1].values)
 
@@ -174,8 +175,7 @@ class Dataset:
         mean_ = df.mean()
         return mean_.values
 
-    def sample_neighbors(self, to_tensor):
-        num_samples = self.config.num_sample_neighbors
+    def sample_neighbors(self, num_samples, to_tensor):
         neighbors_batch = []
         for rel_neigh in self.neighbors:
             rel_neigh_batch = []
@@ -189,7 +189,7 @@ class Dataset:
                     rel_neigh_batch.append(neighbors)
             rel_neigh_batch = np.stack(rel_neigh_batch, axis=0)
             neighbors_batch.append(rel_neigh_batch)
-        neighbors_batch = np.stack(neighbors_batch, axis=0) #.astype(np.int32)
+        neighbors_batch = np.stack(neighbors_batch, axis=0)
         if to_tensor:
             neighbors_batch = torch.from_numpy(neighbors_batch).type(torch.LongTensor)
         return neighbors_batch
@@ -202,6 +202,14 @@ class Dataset:
             return 1
         else:
             return 2
+
+    # Function for only TRS
+    def get_relation_mask(self):
+        rel_shape = self.rel_encoding.shape[:2]
+        mask_flag = np.equal(np.zeros(rel_shape, dtype=np.int32),
+                             np.sum(self.rel_encoding, axis=2))
+        mask = np.where(mask_flag, np.ones(rel_shape), np.zeros(rel_shape))
+        return mask
 
     # Return values
     def get_dataset(self):

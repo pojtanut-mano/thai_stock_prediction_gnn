@@ -24,6 +24,8 @@ class Trainer:
         self.train_f1_hist = []
         self.valid_f1_hist = []
 
+        self.best_model_state = None
+
         (self.X_train, self.y_train), (self.X_test, self.y_test), (self.X_valid, self.y_valid) = data.get_dataset()
         self.dataset = StockDataset(self.X_train, self.y_train)
         self.data_loader = DataLoader(self.dataset, shuffle=config.shuffle_batch)
@@ -33,7 +35,7 @@ class Trainer:
         print('Start training classifier...\n')
 
         best_loss = 1000000
-        best_valid_acc = 0
+        best_valid_f1 = 0
         stopping_criteria = 0
 
         start_time = time.time()
@@ -84,19 +86,28 @@ class Trainer:
                 best_loss = loss
                 stopping_criteria = 0
 
-            if valid_acc > best_valid_acc:
-                best_valid_acc = valid_acc
-                self.model.save_checkpoint()
+            if valid_f1 > best_valid_f1:
+                best_valid_f1 = valid_f1
+                self.best_model_state = self.model.save_model()
 
             if stopping_criteria >= self.config.early_stopping_period:
                 print('Early stopping occurs at {}'.format(epoch + 1))
-                print('Last epoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, self.cost_hist[-1], train_acc * 100, valid_acc * 100))
+                print('Last epoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch + 1,
+                                                                                                       self.cost_hist[
+                                                                                                           -1],
+                                                                                                       train_acc * 100,
+                                                                                                       valid_acc * 100))
                 break
 
-            if (epoch+1) % self.config.print_log == 0:
+            if (epoch + 1) % self.config.print_log == 0:
                 sample_index = np.random.choice(range(label.shape[0]))
-                print('\nEpoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch+1, self.cost_hist[-1], train_acc * 100, valid_acc * 100))
-                print('Example {}: probs = {}, label = {}'.format(sample_index, valid_probs[sample_index].cpu().detach(), label[sample_index]))
+                print('\nEpoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch + 1,
+                                                                                                    self.cost_hist[-1],
+                                                                                                    train_acc * 100,
+                                                                                                    valid_acc * 100))
+                print(
+                    'Example {}: probs = {}, label = {}'.format(sample_index, valid_probs[sample_index].cpu().detach(),
+                                                                label[sample_index]))
                 print(np.unique(train_pred_list, return_counts=True))
                 print('Current learning rate: {}'.format(self.model.scheduler.get_last_lr()[0]))
                 print('---------------------------------------')
@@ -105,13 +116,14 @@ class Trainer:
                 print('Overfitting occurs at {} epoch'.format(epoch + 1))
                 break
 
-            if (epoch+1) == self.config.epochs:
+            if (epoch + 1) == self.config.epochs:
                 print('Max iterations reached.')
 
         finish_time = time.time()
         second_used = finish_time - start_time
 
         print('\nTime used: {}'.format(datetime.timedelta(seconds=second_used)))
+        return self.best_model_state, best_valid_f1
 
     def train_regressor(self):
         best_loss = 1000000
@@ -142,23 +154,26 @@ class Trainer:
             self.model.scheduler.step()
 
             # Early stopping
-            if best_loss - loss < self.config.early_stopping_threshold:
+            if best_loss - valid_loss < self.config.early_stopping_threshold:
                 stopping_criteria += 1
                 print('Model not improving for {} epoch(s).'.format(stopping_criteria))
             else:
-                best_loss = loss
+                best_loss = valid_loss
                 stopping_criteria = 0
-                self.model.save_checkpoint()
+                self.best_model_state = self.model.save_model()
 
             if stopping_criteria >= self.config.early_stopping_period:
                 print('Early stopping occurs')
-                print('Last epoch {:3d}, loss = {:.8f}, valid loss = {:.8f}'.format(epoch + 1, self.cost_hist[-1], self.valid_cost_hist[-1]))
+                print('Last epoch {:3d}, loss = {:.8f}, valid loss = {:.8f}'.format(epoch + 1, self.cost_hist[-1],
+                                                                                    self.valid_cost_hist[-1]))
                 break
 
             if (epoch + 1) % self.config.print_log == 0:
                 sample_index = np.random.choice(range(label.shape[0]))
-                print('\nEpoch {:3d}, loss = {:.8f}'.format(epoch + 1, self.cost_hist[-1],))
-                print('Example {}: prediction = {}, label = {}'.format(sample_index, valid_preds[sample_index].cpu().detach(), label[sample_index]))
+                print('\nEpoch {:3d}, loss = {:.8f}'.format(epoch + 1, self.cost_hist[-1], ))
+                print('Example {}: prediction = {}, label = {}'.format(sample_index,
+                                                                       valid_preds[sample_index].cpu().detach(),
+                                                                       label[sample_index]))
                 print('Current learning rate: {}'.format(self.model.scheduler.get_last_lr()[0]))
                 print('---------------------------------------')
 
@@ -169,13 +184,16 @@ class Trainer:
         second_used = finish_time - start_time
 
         print('\nTime used: {}'.format(datetime.timedelta(seconds=second_used)))
+        return self.best_model_state, best_loss
 
     def train_epoch(self):
         tmp_cost_hist = []
         for input_hist, label in self.data_loader:
             # Squeeze one dim
             input_hist = torch.squeeze(input_hist, dim=0).type(torch.float32).to(self.model.device)
-            label = torch.squeeze(label, dim=0).type(torch.LongTensor if self.config.target_type == 'classification' else torch.float32).to(self.model.device)
+            label = torch.squeeze(label, dim=0).type(
+                torch.LongTensor if self.config.target_type == 'classification' else torch.float32).to(
+                self.model.device)
 
             input_hist.requires_grad_(True)
             # Train mode
@@ -212,6 +230,6 @@ class Trainer:
         rank_diff = relu(rank_diff)
         rank_loss = torch.mean(rank_diff)
         return rank_loss
-    
+
     def get_hist(self):
         return self.cost_hist, self.train_acc_hist, self.valid_acc_hist, self.train_f1_hist, self.valid_f1_hist
