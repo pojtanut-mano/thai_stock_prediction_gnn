@@ -8,7 +8,6 @@ seed = 112
 
 # Dataset config
 full_trade_day = 1461
-period = 2
 
 feature_list = ['return']
 index_col = ['Date']
@@ -16,6 +15,7 @@ reg_target_col = ['high_return']
 market_directory = r'..\data\processed\price'
 relation_directory = r'..\data\processed\relation'
 adjacency_matrix_path_name = 'all_relation.npy'
+ticker_file = 'ordered_tickers.pkl'
 
 path = r'checkpoint\18022021_13-23-05_best\TSGNN'
 
@@ -24,12 +24,13 @@ limiter = True
 
 # Model config
 mode = 'train'
-model = 'LSTM'
+model = 'TSGNN'
 directory = model + '_' + datetime.now().strftime("%d%m%Y_%H-%M-%S")
+
 lookback = 50
 train_size = 150
 valid_size = 25
-test_size = 25
+test_size = 50
 train_start = lookback
 
 target_type = 'classification'  # classification or regression
@@ -44,7 +45,7 @@ lstm_input_dims = len(feature_list)
 lstm_layer = 1
 lstm_dropout = 0.4
 
-loss_function = 'MSE'  # MSE, RankMSE or entropy
+loss_function = 'RankMSE'  # MSE, RankMSE
 gamma = 0.9
 step_size = 5
 
@@ -55,10 +56,10 @@ relation_type = 'implicit'
 
 # Hyper params search
 
-c_param = {'num_sample_neighbors': [25, 30],
-           'lstm_hidden_dims': [128],
-           'optimizer': ['RMSprop', 'Adam'],
-           'optimizer_weight_decay': [1e-4, 1e-6],
+c_param = {'num_sample_neighbors': [25],
+           'lstm_hidden_dims': [64, 128],
+           'optimizer': ['Adam', 'RMSprop'],
+           'optimizer_weight_decay': [1e-6],
            'lr': [1e-3, 5e-4]}
 
 c_grid = []
@@ -69,14 +70,14 @@ for a in c_param['num_sample_neighbors']:
                 for e in c_param['lr']:
                     c_grid.append([a, b, c, d, e])
 
-early_stopping_period = 10
+early_stopping_period = 5
 early_stopping_threshold = 1e-6
 
-overfitting_threshold = 0.04
+overfitting_threshold = 0.05
 
 # training config
 epochs = 200
-shuffle_batch = False
+shuffle_batch = True
 print_log = 10
 
 # Export config
@@ -87,3 +88,8 @@ confusion_mat_dir = 'conf_mat'
 config_name = 'config.pkl'
 
 fig_size = (10, 10)
+
+start_period = 13
+end_period = 20
+
+callback_period = 30

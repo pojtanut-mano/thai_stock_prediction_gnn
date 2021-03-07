@@ -24,7 +24,7 @@ class Dataset:
     def load(self):
         print('Loading dataset...\n')
         # Load tickers
-        with open(os.path.join(self.rel_dir, 'ordered_tickers.pkl'), 'rb') as f:
+        with open(os.path.join(self.rel_dir, self.config.ticker_file), 'rb') as f:
             ordered_tickers = pickle.load(f)
 
         # Load adjacency matrices for each relation type
@@ -70,7 +70,7 @@ class Dataset:
             self.valid_set.append(df.iloc[valid_start_idx - self.lookback:test_start_idx - 1].values)
             self.test_set.append(df.iloc[test_start_idx - self.lookback:test_start_idx + self.config.test_size - 1].values)
 
-        self.main_df = np.concatenate((np.stack(self.train_set, axis=0), np.stack(self.valid_set, axis=0), np.stack(self.test_set, axis=0)), axis=1).ravel()
+        self.main_df = np.stack(self.train_set, axis=0).ravel()
 
         # Save date for exporting
         date = raw_df['Date']
@@ -84,6 +84,7 @@ class Dataset:
         self.train_set = self.create_batch(self.config.train_size, self.train_set)
         self.valid_set = self.create_batch(self.config.valid_size, self.valid_set)
         self.test_set = self.create_batch(self.config.test_size, self.test_set)
+        # print(self.train_set[0][0])
         self.train_set = np.swapaxes(self.train_set, 1, 2)
         self.valid_set = np.swapaxes(self.valid_set, 1, 2)
         self.test_set = np.swapaxes(self.test_set, 1, 2)

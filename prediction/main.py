@@ -20,7 +20,7 @@ def main():
     start_time = time.time()
     period_list = list(range(config.train_start, config.full_trade_day - (config.valid_size + config.test_size + config.train_size), config.test_size))
 
-    for period in [period_list[config.period]]:
+    for period in period_list[config.start_period: config.end_period]:
         i = (period - config.lookback) // config.test_size
         print('Period {}'.format(i+1))
         print('-'*10)
@@ -106,7 +106,7 @@ def main():
                                               'valid_f1', 'test_acc', 'test_f1'])
         elif config.mode == 'train' and (config.target_type == 'regression' or config.model == 'TRS'):
             result_df = pd.DataFrame(result_list, columns=['num_sample_neighbors', 'lstm_hidden_dims', 'optimizer',
-                                              'optimizer_weight_decay', 'lr'])
+                                              'optimizer_weight_decay', 'lr', 'train_MSE', 'valid_MSE', 'test_MSE'])
         result_df.to_csv(os.path.join(config.checkpoint_dir, config.directory, period_name, 'grid_search_result.csv'), index=False)
         print('-'*25)
         print('Best param: {}'.format(best_param))
@@ -148,6 +148,8 @@ def main():
 
         # Export config
         evaluator.save_config(best_param, period_name)
+
+        time.sleep(180)
 
     finish_time = time.time()
     second_used = finish_time - start_time

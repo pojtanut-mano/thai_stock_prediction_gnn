@@ -4,6 +4,7 @@ from torch.nn.utils import clip_grad_norm_
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 import os
+import random
 
 EPSILON = 1e-10
 
@@ -35,7 +36,7 @@ class TSGNN(nn.Module):
         self.att_softmax = nn.Softmax(dim=2)
 
         # Relation layer functions
-        self.fc_rel_att = nn.Linear(in_features=hidden_dims + neighbors.shape[0],
+        self.fc_rel_att = nn.Linear(in_features=2 * hidden_dims + neighbors.shape[0],
                                     out_features=1)
         self.rel_att_softmax = nn.Softmax(dim=0)
 
@@ -60,7 +61,7 @@ class TSGNN(nn.Module):
         else:
             self.loss = nn.MSELoss()
 
-        self.leaky_relu = nn.LeakyReLU()
+        self.leaky_relu = nn.LeakyReLU(negative_slope=0.2)
 
         # Device
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -102,7 +103,10 @@ class TSGNN(nn.Module):
         embedding_lookup = nn.Embedding.from_pretrained(state_embedding)
         neighbors_embedding = embedding_lookup(self.neighbors.to(self.device))
 
-        # State attention layer
+        #########################
+        # State attention layer #
+        #########################
+
         # Create relation embedding
         att_rel_emb = self.create_relation_embedding(neighbors_embedding.shape,
                                                      layer='attention')
@@ -113,7 +117,7 @@ class TSGNN(nn.Module):
 
         # Concat (neighbors embedding, self embedding, relation embedding)
         attention = torch.cat((neighbors_embedding, self_emb, att_rel_emb), -1)
-        attention_score = self.fc_att(attention)
+        attention_score = self.leaky_relu(self.fc_att(attention))
         attention_weight = self.att_softmax(attention_score)
         # print(attention_weight.shape, neighbors_embedding.shape)
 
@@ -124,14 +128,20 @@ class TSGNN(nn.Module):
 
         ############################
         # Relation attention layer #
+        ############################
 
         # create relation embedding for relation attention layer
         rel_att_rel_emb = self.create_relation_embedding(dims=neighbors_embedding.shape,
                                                          layer='relation')
-        relation_attention = torch.cat((relation_representation, rel_att_rel_emb), -1)
+
+        # Create node embedding for relation attention
+        rel_att_self_emb = torch.unsqueeze(state_embedding[1:], 0)
+        rel_att_self_emb = rel_att_self_emb.repeat(neighbors_embedding.shape[0], 1, 1)
+
+        relation_attention = torch.cat((relation_representation, rel_att_rel_emb, rel_att_self_emb), -1)
 
         # Concat (relation representation, relation embedding)
-        relation_attention_score = self.fc_rel_att(relation_attention)
+        relation_attention_score = self.leaky_relu(self.fc_rel_att(relation_attention))
         relation_attention_weight = self.rel_att_softmax(relation_attention_score)
 
         updated_state_embedding = torch.mean(relation_attention_weight * relation_representation,

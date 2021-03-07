@@ -78,6 +78,9 @@ class Trainer:
             # Scheduler step
             self.model.scheduler.step()
 
+            # if epoch == 0:
+            #     self.best_model_state = self.model.save_model()
+
             # Early stopping
             if best_loss - loss < self.config.early_stopping_threshold:
                 stopping_criteria += 1
@@ -86,17 +89,18 @@ class Trainer:
                 best_loss = loss
                 stopping_criteria = 0
 
-            if valid_f1 > best_valid_f1:
+            if best_valid_f1 < valid_f1 <= train_f1:
                 best_valid_f1 = valid_f1
                 self.best_model_state = self.model.save_model()
 
-            if stopping_criteria >= self.config.early_stopping_period:
+            if (stopping_criteria >= self.config.early_stopping_period) and epoch > self.config.callback_period:
                 print('Early stopping occurs at {}'.format(epoch + 1))
                 print('Last epoch {:3d}, loss = {:.8f}, accuracy = {:.2f}, validation = {:.2f}'.format(epoch + 1,
                                                                                                        self.cost_hist[
                                                                                                            -1],
                                                                                                        train_acc * 100,
                                                                                                        valid_acc * 100))
+                torch.cuda.empty_cache()
                 break
 
             if (epoch + 1) % self.config.print_log == 0:
@@ -112,17 +116,20 @@ class Trainer:
                 print('Current learning rate: {}'.format(self.model.scheduler.get_last_lr()[0]))
                 print('---------------------------------------')
 
-            if np.abs(train_acc - valid_acc) > self.config.overfitting_threshold:
+            if (np.abs(train_acc - valid_acc) > self.config.overfitting_threshold) and epoch > self.config.callback_period:
                 print('Overfitting occurs at {} epoch'.format(epoch + 1))
+                torch.cuda.empty_cache()
                 break
 
             if (epoch + 1) == self.config.epochs:
                 print('Max iterations reached.')
+                torch.cuda.empty_cache()
 
         finish_time = time.time()
         second_used = finish_time - start_time
 
         print('\nTime used: {}'.format(datetime.timedelta(seconds=second_used)))
+        torch.cuda.empty_cache()
         return self.best_model_state, best_valid_f1
 
     def train_regressor(self):

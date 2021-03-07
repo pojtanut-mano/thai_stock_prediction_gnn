@@ -118,7 +118,7 @@ class Evaluator:
             if self.config.target_type == 'classification':
                 proba_result_df.iloc[counter, :] = pred_proba
 
-                counter += 1
+            counter += 1
         if self.config.target_type == 'classification':
             return result_df, label_df, proba_result_df
         return result_df, label_df
