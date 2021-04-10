@@ -4,6 +4,7 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 import matplotlib.pyplot as plt
 
@@ -22,10 +23,13 @@ class Evaluator:
 
     def metrics(self, pred, label):
         accuracy = accuracy_score(label, pred)
-        f1 = []
-        for i in range(3):
-            f1.append(f1_score(label, pred, labels=[i], average='micro'))
-        return accuracy, np.mean(f1)
+        f1 = f1_score(label, pred, average='macro')
+        return accuracy, f1
+
+    def reg_metrics(self, pred, label):
+        mse = mean_squared_error(label, pred)
+        mae = mean_squared_error(label, pred)
+        return mse, mae
 
     def export_metrics(self, data, model, result_df, period):
         (X_train, y_train), (X_test, y_test), (X_valid, y_valid) = data
@@ -123,23 +127,6 @@ class Evaluator:
             return result_df, label_df, proba_result_df
         return result_df, label_df
 
-    def simple_model_passing(self, data_loader, model):
-        model.eval()
-        result_list = []
-        label_list = []
-        for input_hist, label in data_loader:
-            input_hist = torch.squeeze(input_hist, dim=0).type(torch.float32).to(model.device)
-            if self.config.target_type == 'classification':
-                y_pred_proba = model.forward(input_hist).detach().cpu().numpy()
-                y_pred = np.argmax(y_pred_proba, axis=1)
-                result_list.extend(y_pred)
-                label_list.extend(label.numpy().ravel())
-            else:
-                y_pred = model.forward(input_hist).detach().cpu().numpy()
-                result_list.extend(y_pred.ravel())
-                label_list.extend(label.numpy().ravel())
-        return result_list, label_list
-
     def export_history(self, hist, period):
         cost_hist, train_acc_hist, valid_acc_hist, train_f1_hist, valid_f1_hist = hist
         self.hist_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.hist_dir)
@@ -178,39 +165,10 @@ class Evaluator:
         plt.savefig(os.path.join(self.hist_filename, '{}_plot.png'.format(plot_name)))
         plt.clf()
 
-    def save_result(self, df, model, data, param, index):
-        (X_train, y_train), (X_test, y_test), (X_valid, y_valid) = data
-
-        train_dataset = StockDataset(X_train, y_train)
-        valid_dataset = StockDataset(X_valid, y_valid)
-        test_dataset = StockDataset(X_test, y_test)
-
-        train_data_loader = DataLoader(train_dataset)
-        valid_data_loader = DataLoader(valid_dataset)
-        test_data_loader = DataLoader(test_dataset)
-
-        # Pass train set through model
-        if self.config.target_type == 'classification':
-            train_pred_df, train_label_df = self.simple_model_passing(train_data_loader, model)
-            valid_pred_df, valid_label_df = self.simple_model_passing(valid_data_loader, model)
-            test_pred_df, test_label_df = self.simple_model_passing(test_data_loader, model)
-
-            train_acc, valid_acc, test_acc = accuracy_score(train_label_df, train_pred_df), accuracy_score(
-                valid_label_df, valid_pred_df), accuracy_score(test_label_df, test_pred_df)
-            train_f1, valid_f1, test_f1 = f1_score(train_label_df, train_pred_df, average='macro'), f1_score(
-                valid_label_df, valid_pred_df, average='macro'), f1_score(test_label_df, test_pred_df, average='macro')
-
-            df.append(param + [train_acc, train_f1, valid_acc, valid_f1, test_acc, test_f1])
-
-        else:
-            train_pred_df, train_label_df = self.simple_model_passing(train_data_loader, model)
-            valid_pred_df, valid_label_df = self.simple_model_passing(valid_data_loader, model)
-            test_pred_df, test_label_df = self.simple_model_passing(test_data_loader, model)
-
-            train_mse, valid_mse, test_mse = mean_squared_error(train_label_df, train_pred_df), mean_squared_error(valid_label_df, valid_pred_df), mean_squared_error(test_label_df, test_pred_df)
-            df.append(param + [train_mse, valid_mse, test_mse])
-
-        return df
+    def export_rel_weight(self, rel_weight, period):
+        weight_output_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, 'relation_weight.csv')
+        weight_df = pd.DataFrame(rel_weight)
+        weight_df.to_csv(weight_output_filename, index=False)
 
     def save_config(self, param, period):
         with open(os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.config_name), 'wb') as f:

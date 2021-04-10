@@ -6,11 +6,9 @@ import numpy as np
 import os
 import random
 
-EPSILON = 1e-10
-
 
 class TRS(nn.Module):
-    def __init__(self, config, relation, rel_mask, hidden_dims, optimizer, weight_decay, lr):
+    def __init__(self, config, relation, rel_mask, hidden_dims, optimizer, weight_decay, lr, dropout_rate):
         super(TRS, self).__init__()
         self.config = config
 
@@ -18,12 +16,9 @@ class TRS(nn.Module):
         self.checkpoint_file = os.path.join(self.checkpoint_directory, config.directory, config.name)
 
         # LSTM layer
-        if config.lstm_layer > 1:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer, dropout=config.lstm_dropout)
-        else:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer)
+        self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
+                            config.lstm_layer)
+        self.dropout = dropout_rate
 
         # Fully connected
         self.explicit_fc = nn.Linear(in_features=relation.shape[2],
@@ -74,6 +69,7 @@ class TRS(nn.Module):
 
     def forward(self, stock_hist):
         _, (state_embedding, _) = self.lstm(stock_hist)
+        state_embedding = self.dropout(state_embedding)
         state_embedding = torch.squeeze(state_embedding, dim=0)
 
         relation_importance = torch.squeeze(self.leaky_relu(self.explicit_fc(self.relation)), dim=2)

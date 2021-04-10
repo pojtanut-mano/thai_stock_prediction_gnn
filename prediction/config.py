@@ -9,18 +9,15 @@ seed = 112
 # Dataset config
 full_trade_day = 1461
 
-feature_list = ['return']
+feature_list = ['Open', 'High', 'Low', 'Close', 'Volume', 'return_feat']
 index_col = ['Date']
-reg_target_col = ['high_return']
+target_col = ['return_target']
 market_directory = r'..\data\processed\price'
 relation_directory = r'..\data\processed\relation'
-adjacency_matrix_path_name = 'all_relation.npy'
-ticker_file = 'ordered_tickers.pkl'
+adjacency_matrix_path_name = 'all_stock_all_relation.npy'
+ticker_file = 'all_tickers.pkl'
 
-path = r'checkpoint\18022021_13-23-05_best\TSGNN'
-
-scale_type = 'normalize'
-limiter = True
+target_look_forward = 1
 
 # Model config
 mode = 'train'
@@ -43,9 +40,8 @@ name = model + '.pt'
 
 lstm_input_dims = len(feature_list)
 lstm_layer = 1
-lstm_dropout = 0.4
 
-loss_function = 'RankMSE'  # MSE, RankMSE
+loss_function = 'MSE'  # MSE, RankMSE
 gamma = 0.9
 step_size = 5
 
@@ -55,12 +51,12 @@ clip_grad = 0
 relation_type = 'implicit'
 
 # Hyper params search
-
 c_param = {'num_sample_neighbors': [25],
-           'lstm_hidden_dims': [64, 128],
+           'lstm_hidden_dims': [128],
            'optimizer': ['Adam', 'RMSprop'],
            'optimizer_weight_decay': [1e-6],
-           'lr': [1e-3, 5e-4]}
+           'lr': [1e-3, 5e-4],
+           'dropout_rate': [0.1, 0.3]}
 
 c_grid = []
 for a in c_param['num_sample_neighbors']:
@@ -68,15 +64,16 @@ for a in c_param['num_sample_neighbors']:
         for c in c_param['optimizer']:
             for d in c_param['optimizer_weight_decay']:
                 for e in c_param['lr']:
-                    c_grid.append([a, b, c, d, e])
+                    for f in c_param['dropout_rate']:
+                        c_grid.append([a, b, c, d, e, f])
 
 early_stopping_period = 5
 early_stopping_threshold = 1e-6
 
-overfitting_threshold = 0.05
+overfitting_threshold = 0.04
 
 # training config
-epochs = 200
+epochs = 150
 shuffle_batch = True
 print_log = 10
 
@@ -89,7 +86,9 @@ config_name = 'config.pkl'
 
 fig_size = (10, 10)
 
-start_period = 13
-end_period = 20
+start_period = 7
+end_period = 24
 
 callback_period = 30
+
+scale_type = 'normalize'

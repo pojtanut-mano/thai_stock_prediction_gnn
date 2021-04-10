@@ -26,6 +26,7 @@ class Dataset:
         # Load tickers
         with open(os.path.join(self.rel_dir, self.config.ticker_file), 'rb') as f:
             ordered_tickers = pickle.load(f)
+        # print(ordered_tickers[200])
 
         # Load adjacency matrices for each relation type
         self.rel_encoding = np.load(os.path.join(self.rel_dir, self.config.adjacency_matrix_path_name))
@@ -48,35 +49,44 @@ class Dataset:
 
         print('Adjacency matrix shape: {}\n'.format(self.rel_encoding.shape))
 
-        train_target_start_idx = self.start_date
-        valid_start_idx = train_target_start_idx + self.config.train_size
+        train_start_idx = self.start_date
+        valid_start_idx = train_start_idx + self.config.train_size
         test_start_idx = valid_start_idx + self.config.valid_size
+
+        train_target_start_idx = train_start_idx + self.config.target_look_forward - 1
+        valid_target_start_idx = train_target_start_idx + self.config.train_size
+        test_target_start_idx = valid_target_start_idx + self.config.valid_size
 
         for ticker in ordered_tickers:
             raw_df = pd.read_csv(os.path.join(self.mkt_dir, '{}.csv'.format(ticker)))
-            df = raw_df[self.feature_list]
+            feature_df = raw_df[self.feature_list]
+            target_df = raw_df[self.config.target_col]
             if self.config.target_type == 'classification':  # 0 = down, 1 = neutral, 2 = up
-                self.train_label.append(df.iloc[train_target_start_idx:valid_start_idx, 0].apply(self.classify).values)
-                self.valid_label.append(df.iloc[valid_start_idx: test_start_idx, 0].apply(self.classify).values)
+                self.train_label.append(
+                    target_df.iloc[train_target_start_idx:valid_target_start_idx, 0].apply(self.classify).values)
+                self.valid_label.append(
+                    target_df.iloc[valid_target_start_idx: test_target_start_idx, 0].apply(self.classify).values)
                 self.test_label.append(
-                    df.iloc[test_start_idx:test_start_idx + self.config.test_size, 0].apply(self.classify).values)
+                    target_df.iloc[test_target_start_idx:test_target_start_idx + self.config.test_size, 0].apply(
+                        self.classify).values)
             else:
-                self.train_label.append(raw_df[self.config.reg_target_col].iloc[train_target_start_idx:valid_start_idx].values)
-                self.valid_label.append(raw_df[self.config.reg_target_col].iloc[valid_start_idx: test_start_idx].values)
-                self.test_label.append(raw_df[self.config.reg_target_col].iloc[test_start_idx:test_start_idx + self.config.test_size].values)
+                self.train_label.append(target_df.iloc[train_target_start_idx: valid_target_start_idx].values)
+                self.valid_label.append(target_df.iloc[valid_target_start_idx: test_target_start_idx].values)
+                self.test_label.append(target_df.iloc[test_target_start_idx: test_target_start_idx + self.config.test_size].values)
 
             # Append dataset
-            self.train_set.append(df.iloc[train_target_start_idx - self.lookback:valid_start_idx - 1].values)
-            self.valid_set.append(df.iloc[valid_start_idx - self.lookback:test_start_idx - 1].values)
-            self.test_set.append(df.iloc[test_start_idx - self.lookback:test_start_idx + self.config.test_size - 1].values)
+            self.train_set.append(feature_df.iloc[train_start_idx - self.lookback: valid_start_idx - 1, :].values)
+            self.valid_set.append(feature_df.iloc[valid_start_idx - self.lookback: test_start_idx - 1, :].values)
+            self.test_set.append(feature_df.iloc[test_start_idx - self.lookback: test_start_idx + self.config.test_size-1, :].values)
 
-        self.main_df = np.stack(self.train_set, axis=0).ravel()
+        self.main_df = np.stack(self.train_set, axis=0).reshape(-1, len(self.config.feature_list))
 
         # Save date for exporting
         date = raw_df['Date']
-        self.train_date = date[train_target_start_idx:valid_start_idx].reset_index(drop=True)
-        self.valid_date = date[valid_start_idx: test_start_idx].reset_index(drop=True)
-        self.test_date = date[test_start_idx:test_start_idx + self.config.test_size].reset_index(drop=True)
+        self.train_date = date[train_target_start_idx:valid_target_start_idx].reset_index(drop=True)
+        self.valid_date = date[valid_target_start_idx: test_target_start_idx].reset_index(drop=True)
+        self.test_date = date[test_target_start_idx:test_target_start_idx + self.config.test_size].reset_index(
+            drop=True)
 
         # Convert train set, valid set, test set to
         # shape: (number of samples, number of companies, lookback, feature(s))
@@ -84,14 +94,16 @@ class Dataset:
         self.train_set = self.create_batch(self.config.train_size, self.train_set)
         self.valid_set = self.create_batch(self.config.valid_size, self.valid_set)
         self.test_set = self.create_batch(self.config.test_size, self.test_set)
-        # print(self.train_set[0][0])
-        self.train_set = np.swapaxes(self.train_set, 1, 2)
-        self.valid_set = np.swapaxes(self.valid_set, 1, 2)
-        self.test_set = np.swapaxes(self.test_set, 1, 2)
-        if self.config.limiter:
-            np.clip(self.train_set, -0.2, 0.2, out=self.train_set)
-            np.clip(self.valid_set, -0.2, 0.2, out=self.valid_set)
-            np.clip(self.test_set, -0.2, 0.2, out=self.test_set)
+        # print(self.valid_set[0][200])
+        if self.config.model != 'MLP':
+            self.train_set = np.swapaxes(self.train_set, 1, 2)
+            self.valid_set = np.swapaxes(self.valid_set, 1, 2)
+            self.test_set = np.swapaxes(self.test_set, 1, 2)
+
+        # if self.config.limiter:
+        #     np.clip(self.train_set, -0.2, 0.2, out=self.train_set)
+        #     np.clip(self.valid_set, -0.2, 0.2, out=self.valid_set)
+        #     np.clip(self.test_set, -0.2, 0.2, out=self.test_set)
 
         if self.config.scale_type == 'MinMax':
             print("Initialize MinMax scaling")
@@ -128,6 +140,14 @@ class Dataset:
         self.train_label = self.create_label_batch(self.config.train_size, self.train_label)
         self.valid_label = self.create_label_batch(self.config.valid_size, self.valid_label)
         self.test_label = self.create_label_batch(self.config.test_size, self.test_label)
+        if self.config.model == 'MLP':
+            self.train_set = self.train_set.reshape(self.train_set.shape[0], self.train_set.shape[1],
+                                                    self.config.lookback * len(self.config.feature_list))
+            self.valid_set = self.valid_set.reshape(self.valid_set.shape[0], self.valid_set.shape[1],
+                                                    self.config.lookback * len(self.config.feature_list))
+            self.test_set = self.test_set.reshape(self.test_set.shape[0], self.test_set.shape[1],
+                                                    self.config.lookback * len(self.config.feature_list))
+        # print(self.valid_label[:, 200])
         if self.config.verbose >= 1:
             print(
                 "training label shape: {}\nvalid label shape: {}\ntest label shape: {}\n".format(self.train_label.shape,
@@ -163,18 +183,18 @@ class Dataset:
 
     # Utils
     def minmax_scaler(self, df):
-        min_ = df.min()
-        max_ = df.max()
+        min_ = np.min(df, axis=0)
+        max_ = np.max(df, axis=0)
         return min_, max_
 
     def normalize(self, df):
-        mean_ = df.mean()
-        std_ = df.std()
+        mean_ = np.mean(df, axis=0)
+        std_ = np.std(df, axis=0)
         return mean_, std_
 
     def mean_depreciation(self, df):
-        mean_ = df.mean()
-        return mean_.values
+        mean_ = np.mean(df, axis=0)
+        return mean_
 
     def sample_neighbors(self, num_samples, to_tensor):
         neighbors_batch = []
@@ -214,8 +234,7 @@ class Dataset:
 
     # Return values
     def get_dataset(self):
-        return (self.train_set, self.train_label), (self.test_set, self.test_label), \
-               (self.valid_set, self.valid_label)
+        return (self.train_set, self.train_label), (self.test_set, self.test_label), (self.valid_set, self.valid_label)
 
     # debugging method
     def print_sample_batch(self):

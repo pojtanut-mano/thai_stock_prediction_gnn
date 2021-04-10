@@ -4,12 +4,11 @@ from torch.nn.utils import clip_grad_norm_
 from torch.optim.lr_scheduler import StepLR
 import numpy as np
 import os
-
-EPSILON = 1e-10
+import random
 
 
 class LSTM(nn.Module):
-    def __init__(self, config, hidden_dims, optimizer, weight_decay, lr):
+    def __init__(self, config, hidden_dims, optimizer, weight_decay, lr, dropout_rate):
         super(LSTM, self).__init__()
         self.config = config
         self.checkpoint_directory = config.checkpoint_dir
@@ -18,12 +17,9 @@ class LSTM(nn.Module):
         # reproducibility
         self.init_seed()
 
-        if config.lstm_layer > 1:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer, dropout=config.lstm_dropout)
-        else:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer)
+        self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
+                            config.lstm_layer)
+        self.dropout = nn.Dropout(p=dropout_rate)
 
         # Fully-connected layer
         self.fc = nn.Linear(in_features=hidden_dims,
@@ -67,11 +63,12 @@ class LSTM(nn.Module):
 
     def forward(self, stock_hist):
         _, (state_embedding, _) = self.lstm(stock_hist)
+        state_embedding = self.dropout(state_embedding)
         state_embedding = torch.squeeze(state_embedding, dim=0)
 
         # Prediction layer
-        fc_result = self.leaky_relu(self.fc(state_embedding))
-        preds = self.fc1(fc_result)
+        # fc_result = self.leaky_relu(self.fc(state_embedding))
+        preds = self.dropout(self.fc1(state_embedding))
         if self.config.target_type == 'classification':
             preds = self.softmax(preds)
 
@@ -99,6 +96,7 @@ class LSTM(nn.Module):
     def init_seed(self):
         np.random.seed(self.config.seed)
         torch.manual_seed(self.config.seed)
+        random.seed(self.config.seed)
 
     def save_model(self):
         print('... saving state ...')

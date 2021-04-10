@@ -10,7 +10,7 @@ EPSILON = 1e-10
 
 
 class TSGNN(nn.Module):
-    def __init__(self, config, neighbors, rel_num, hidden_dims, optimizer, weight_decay, lr):
+    def __init__(self, config, neighbors, rel_num, hidden_dims, optimizer, weight_decay, lr, dropout_rate):
         super(TSGNN, self).__init__()
         self.config = config
         self.neighbors = neighbors
@@ -19,16 +19,14 @@ class TSGNN(nn.Module):
         self.checkpoint_file = os.path.join(self.checkpoint_directory, config.directory, config.name)
 
         self.hidden_dims = hidden_dims
+        self.relation_weight = None
 
         # reproducibility
         self.init_seed()
 
-        if config.lstm_layer > 1:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer, dropout=config.lstm_dropout)
-        else:
-            self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
-                                config.lstm_layer)
+        self.lstm = nn.LSTM(config.lstm_input_dims, hidden_dims,
+                            config.lstm_layer)
+        self.dropout = nn.Dropout(p=dropout_rate)
 
         # Attention layer functions
         self.fc_att = nn.Linear(in_features=2 * hidden_dims + neighbors.shape[0],
@@ -81,6 +79,7 @@ class TSGNN(nn.Module):
 
     def forward(self, stock_hist):
         _, (state_embedding, _) = self.lstm(stock_hist)
+        state_embedding = self.dropout(state_embedding)
         state_embedding = torch.squeeze(state_embedding, dim=0)
         # print(torch.isnan(state_embedding).any())
 
@@ -88,7 +87,7 @@ class TSGNN(nn.Module):
         state_embedding = torch.cat((torch.zeros(1, self.hidden_dims).to(self.device),
                                      state_embedding), 0)
 
-        updated_state_embedding = self.graph_attention_layer(state_embedding)
+        updated_state_embedding, self.relation_weight = self.graph_attention_layer(state_embedding)
         final_state_embedding = updated_state_embedding + state_embedding[1:]
 
         # Prediction layer
@@ -146,7 +145,7 @@ class TSGNN(nn.Module):
 
         updated_state_embedding = torch.mean(relation_attention_weight * relation_representation,
                                              dim=0)
-        return updated_state_embedding
+        return updated_state_embedding, torch.squeeze(relation_attention_weight, dim=-1)
 
     def create_relation_embedding(self, dims, layer):
         num_relations = dims[0]
@@ -178,6 +177,9 @@ class TSGNN(nn.Module):
             nn.init.xavier_uniform_(m.weight)
             nn.init.zeros_(m.bias)
 
+    def get_relation_weight(self):
+        return self.relation_weight.detach().cpu().numpy()
+
     def save_checkpoint(self):
         print('... saving checkpoint ...')
         torch.save(self.state_dict(), self.checkpoint_file)
@@ -186,13 +188,14 @@ class TSGNN(nn.Module):
         print('... loading checkpoint ...')
         self.load_state_dict(torch.load(self.checkpoint_file))
 
-    def load(self):
+    def load(self, path):
         print('... loading from path ...')
-        self.load_state_dict(torch.load(self.config.path))
+        self.load_state_dict(torch.load(path))
 
     def init_seed(self):
         np.random.seed(self.config.seed)
         torch.manual_seed(self.config.seed)
+        random.seed(self.config.seed)
 
     def save_model(self):
         print('... saving state ...')
