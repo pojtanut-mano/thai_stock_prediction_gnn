@@ -20,8 +20,7 @@ ticker_file = 'all_tickers.pkl'
 target_look_forward = 1
 
 # Model config
-mode = 'train'
-model = 'TSGNN'
+model = 'MLP'
 directory = model + '_' + datetime.now().strftime("%d%m%Y_%H-%M-%S")
 
 lookback = 50
@@ -30,10 +29,6 @@ valid_size = 25
 test_size = 50
 train_start = lookback
 
-target_type = 'classification'  # classification or regression
-
-rank_weight = 0.3
-
 # TSGNN config
 checkpoint_dir = 'train_hist'
 name = model + '.pt'
@@ -41,7 +36,6 @@ name = model + '.pt'
 lstm_input_dims = len(feature_list)
 lstm_layer = 1
 
-loss_function = 'MSE'  # MSE, RankMSE
 gamma = 0.9
 step_size = 5
 
@@ -73,7 +67,7 @@ early_stopping_threshold = 1e-6
 overfitting_threshold = 0.04
 
 # training config
-epochs = 150
+epochs = 1
 shuffle_batch = True
 print_log = 10
 
@@ -86,7 +80,7 @@ config_name = 'config.pkl'
 
 fig_size = (10, 10)
 
-start_period = 7
+start_period = 0
 end_period = 24
 
 callback_period = 30

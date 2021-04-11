@@ -2,15 +2,12 @@ from dataset import Dataset
 from trainer import Trainer
 from TSGNN import TSGNN
 from LSTM import LSTM
-from TRS import TRS
 from MLP import MLP
 from evaluator import Evaluator
 import config
 import os
 import time
 import datetime
-import pickle
-import torch
 
 import pandas as pd
 
@@ -33,7 +30,6 @@ def main():
         os.mkdir(period_dir)
 
         best_valid_f1 = 0
-        best_valid_loss = 100000000
 
         # Result dataframe
         result_list = []
@@ -57,56 +53,31 @@ def main():
             elif config.model == 'LSTM':
                 model = LSTM(config, **param_grid)
 
-            elif config.model == 'TRS':
-                relation = stock.rel_encoding
-                rel_mask = stock.get_relation_mask()
-                model = TRS(config, relation, rel_mask, **param_grid)
-
             else:
                 model = MLP(config, **param_grid)
 
             trainer = Trainer(model, stock, config, evaluator)
             # train
             # Check if the best valid acc is less than curr, if so, set best acc = curr
-            if config.mode == 'train' and config.target_type == 'classification':
-                if config.model == 'TSGNN':
-                    trained_state, valid_f1, score_list, avg_rel_weight = trainer.train_classifier()
-                else:
-                    trained_state, valid_f1, score_list = trainer.train_classifier()
-                result_list.append(param + score_list)
-                if best_valid_f1 < valid_f1:
-                    print('Better validation f1: {:.4f}'.format(valid_f1))
-                    print('-'*20)
-                    best_valid_f1 = valid_f1
-                    best_state = trained_state
-                    best_hist = trainer.get_hist()
-                    best_param = param
-                    if config.model == 'TSGNN':
-                        best_rel_weight = avg_rel_weight
 
-            elif config.mode == 'train' and (config.target_type == 'regression' or config.model == 'TRS'):
+            if config.model == 'TSGNN':
+                trained_state, valid_f1, score_list, avg_rel_weight = trainer.train_classifier()
+            else:
+                trained_state, valid_f1, score_list = trainer.train_classifier()
+            result_list.append(param + score_list)
+            if best_valid_f1 < valid_f1:
+                print('Better validation f1: {:.4f}'.format(valid_f1))
+                print('-'*20)
+                best_valid_f1 = valid_f1
+                best_state = trained_state
+                best_hist = trainer.get_hist()
+                best_param = param
                 if config.model == 'TSGNN':
-                    trained_state, valid_loss, score_list, avg_rel_weight = trainer.train_regressor()
-                else:
-                    trained_state, valid_loss, score_list = trainer.train_regressor()
-                result_list.append(param+score_list)
-                if best_valid_loss > valid_loss:
-                    print('Better validation loss: {:.4f}'.format(valid_loss))
-                    print('-' * 20)
-                    best_valid_loss = valid_loss
-                    best_state = trained_state
-                    best_hist = trainer.get_hist()
-                    best_param = param
-                    if config.model == 'TSGNN':
-                        best_rel_weight = avg_rel_weight
+                    best_rel_weight = avg_rel_weight
 
-        if config.mode == 'train' and config.target_type == 'classification':
-            result_df = pd.DataFrame(result_list, columns=['num_sample_neighbors', 'lstm_hidden_dims', 'optimizer',
-                                              'optimizer_weight_decay', 'lr', 'dropout', 'train_acc', 'train_f1', 'valid_acc',
-                                              'valid_f1', 'test_acc', 'test_f1'])
-        elif config.mode == 'train' and (config.target_type == 'regression' or config.model == 'TRS'):
-            result_df = pd.DataFrame(result_list, columns=['num_sample_neighbors', 'lstm_hidden_dims', 'optimizer',
-                                              'optimizer_weight_decay', 'lr', 'dropout', 'train_MSE', 'train_MAE', 'valid_MSE', 'valid_MAE', 'test_MSE', 'test_MAE'])
+        result_df = pd.DataFrame(result_list, columns=['num_sample_neighbors', 'lstm_hidden_dims', 'optimizer',
+                                          'optimizer_weight_decay', 'lr', 'dropout', 'train_acc', 'train_f1', 'valid_acc',
+                                          'valid_f1', 'test_acc', 'test_f1'])
 
         result_df.to_csv(os.path.join(config.checkpoint_dir, config.directory, period_name, 'grid_search_result.csv'), index=False)
         print('-'*25)
@@ -117,8 +88,6 @@ def main():
             model = TSGNN(config, neighbors, rel_num, best_param[1], best_param[2], best_param[3], best_param[4], best_param[5])
         elif config.model == 'LSTM':
             model = LSTM(config, best_param[1], best_param[2], best_param[3], best_param[4], best_param[5])
-        elif config.model == 'TRS':
-            model = TRS(config, relation, rel_mask, best_param[1], best_param[2], best_param[3], best_param[4], best_param[5])
         else:
             model = MLP(config, best_param[1], best_param[2], best_param[3], best_param[4], best_param[5])
 
@@ -143,8 +112,7 @@ def main():
 
         result_df = (train_df, valid_df, test_df)
 
-        if config.mode == 'train':
-            evaluator.export_history(best_hist, period_name)
+        evaluator.export_history(best_hist, period_name)
 
         # Export each set
         evaluator.export_metrics(stock.get_dataset(), model, result_df, period_name)

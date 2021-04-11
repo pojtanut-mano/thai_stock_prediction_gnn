@@ -29,12 +29,9 @@ class MLP(nn.Module):
         self.fc_hidden_3 = nn.Linear(in_features=hidden_dims, out_features=hidden_dims)
         self.fc_hidden_4 = nn.Linear(in_features=hidden_dims, out_features=hidden_dims)
 
-        if config.target_type == 'classification':
-            self.fc_output = nn.Linear(in_features=hidden_dims,
-                                 out_features=3)
-        else:
-            self.fc_output = nn.Linear(in_features=hidden_dims,
-                                 out_features=1)
+        self.fc_output = nn.Linear(in_features=hidden_dims,
+                             out_features=3)
+
         self.softmax = nn.Softmax(dim=1)
 
         # Utils
@@ -44,11 +41,7 @@ class MLP(nn.Module):
         else:
             self.optimizer = optim.RMSprop(params=self.parameters(), lr=lr,
                                            weight_decay=weight_decay)
-        if config.target_type == 'classification':
-            self.loss = nn.CrossEntropyLoss()
-        else:
-            self.loss = nn.MSELoss()
-
+        self.loss = nn.CrossEntropyLoss()
         self.relu = nn.ReLU()
 
         # Device
@@ -75,7 +68,6 @@ class MLP(nn.Module):
         fc_hidden_3_r = self.dropout(self.relu(self.fc_hidden_3(fc_hidden_2_r)))
         fc_hidden_4_r = self.dropout(self.relu(self.fc_hidden_4(fc_hidden_3_r)))
         fc_output_r = self.dropout(self.relu(self.fc_output(fc_hidden_4_r)))
-        # print(fc_output_r.shape)
         preds = self.softmax(fc_output_r)
 
         return preds

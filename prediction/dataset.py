@@ -26,7 +26,6 @@ class Dataset:
         # Load tickers
         with open(os.path.join(self.rel_dir, self.config.ticker_file), 'rb') as f:
             ordered_tickers = pickle.load(f)
-        # print(ordered_tickers[200])
 
         # Load adjacency matrices for each relation type
         self.rel_encoding = np.load(os.path.join(self.rel_dir, self.config.adjacency_matrix_path_name))
@@ -61,18 +60,13 @@ class Dataset:
             raw_df = pd.read_csv(os.path.join(self.mkt_dir, '{}.csv'.format(ticker)))
             feature_df = raw_df[self.feature_list]
             target_df = raw_df[self.config.target_col]
-            if self.config.target_type == 'classification':  # 0 = down, 1 = neutral, 2 = up
-                self.train_label.append(
-                    target_df.iloc[train_target_start_idx:valid_target_start_idx, 0].apply(self.classify).values)
-                self.valid_label.append(
-                    target_df.iloc[valid_target_start_idx: test_target_start_idx, 0].apply(self.classify).values)
-                self.test_label.append(
-                    target_df.iloc[test_target_start_idx:test_target_start_idx + self.config.test_size, 0].apply(
-                        self.classify).values)
-            else:
-                self.train_label.append(target_df.iloc[train_target_start_idx: valid_target_start_idx].values)
-                self.valid_label.append(target_df.iloc[valid_target_start_idx: test_target_start_idx].values)
-                self.test_label.append(target_df.iloc[test_target_start_idx: test_target_start_idx + self.config.test_size].values)
+            self.train_label.append(
+                target_df.iloc[train_target_start_idx:valid_target_start_idx, 0].apply(self.classify).values)
+            self.valid_label.append(
+                target_df.iloc[valid_target_start_idx: test_target_start_idx, 0].apply(self.classify).values)
+            self.test_label.append(
+                target_df.iloc[test_target_start_idx:test_target_start_idx + self.config.test_size, 0].apply(
+                    self.classify).values)
 
             # Append dataset
             self.train_set.append(feature_df.iloc[train_start_idx - self.lookback: valid_start_idx - 1, :].values)
@@ -100,11 +94,6 @@ class Dataset:
             self.valid_set = np.swapaxes(self.valid_set, 1, 2)
             self.test_set = np.swapaxes(self.test_set, 1, 2)
 
-        # if self.config.limiter:
-        #     np.clip(self.train_set, -0.2, 0.2, out=self.train_set)
-        #     np.clip(self.valid_set, -0.2, 0.2, out=self.valid_set)
-        #     np.clip(self.test_set, -0.2, 0.2, out=self.test_set)
-
         if self.config.scale_type == 'MinMax':
             print("Initialize MinMax scaling")
             min_, max_ = self.minmax_scaler(self.main_df)
@@ -127,11 +116,6 @@ class Dataset:
             self.valid_set = self.valid_set - mean_
             self.test_set = self.test_set - mean_
 
-        # self.input_distribution(self.train_set.ravel(), 'train')
-        # self.input_distribution(self.valid_set.ravel(), 'valid')
-        # self.input_distribution(self.test_set.ravel(), 'test')
-        # print(np.where(self.train_set == np.max(self.train_set.ravel())), np.max(self.train_set.ravel()))
-        # print(self.train_set.shape)
         if self.config.verbose >= 1:
             print("training set shape: {}\nvalid set shape: {}\ntest set shape: {}\n".format(self.train_set.shape,
                                                                                              self.valid_set.shape,
@@ -242,15 +226,6 @@ class Dataset:
         print(self.train_set[0][0], '\n\n', self.train_set[1][0])
         print('Target of lag 0 and lag1')
         print(self.train_label[0][0], self.train_label[1][0])
-
-    def input_distribution(self, df, plot_name):
-        fig, ax = plt.subplots(1, 1, figsize=self.config.fig_size)
-        ax.hist(df, bins=50, range=(np.min(df) - 0.005, np.max(df) + 0.05))
-        ax.set_xlabel('return')
-        ax.set_xlim((np.min(df) - 0.005, np.max(df) + 0.05))
-        plt.title(plot_name + ' distribution')
-        plt.savefig(os.path.join(self.config.checkpoint_dir, self.config.directory, plot_name + '_distribution.png'))
-        plt.clf()
 
 
 class StockDataset(Dataset):

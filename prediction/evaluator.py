@@ -4,7 +4,6 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
 
 import matplotlib.pyplot as plt
 
@@ -44,14 +43,9 @@ class Evaluator:
         test_data_loader = DataLoader(test_dataset)
 
         # Pass train set through model
-        if self.config.target_type == 'classification':
-            train_pred_df, train_label_df, train_pred_proba_df = self.model_passing(train_data_loader, train_df, model)
-            valid_pred_df, valid_label_df, valid_pred_proba_df = self.model_passing(valid_data_loader, valid_df, model)
-            test_pred_df, test_label_df, test_pred_proba_df = self.model_passing(test_data_loader, test_df, model)
-        else:
-            train_pred_df, train_label_df = self.model_passing(train_data_loader, train_df, model)
-            valid_pred_df, valid_label_df= self.model_passing(valid_data_loader, valid_df, model)
-            test_pred_df, test_label_df = self.model_passing(test_data_loader, test_df, model)
+        train_pred_df, train_label_df, train_pred_proba_df = self.model_passing(train_data_loader, train_df, model)
+        valid_pred_df, valid_label_df, valid_pred_proba_df = self.model_passing(valid_data_loader, valid_df, model)
+        test_pred_df, test_label_df, test_pred_proba_df = self.model_passing(test_data_loader, test_df, model)
 
         # Export raw
         raw_output_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.raw_output_dir)
@@ -65,38 +59,37 @@ class Evaluator:
         valid_label_df.to_csv(os.path.join(raw_output_filename, 'valid_label_df.csv'))
         test_label_df.to_csv(os.path.join(raw_output_filename, 'test_label_df.csv'))
 
-        if self.config.target_type == 'classification':
-            train_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'train_pred_proba_df.csv'))
-            valid_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'valid_pred_proba_df.csv'))
-            test_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'test_pred_proba_df.csv'))
+        train_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'train_pred_proba_df.csv'))
+        valid_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'valid_pred_proba_df.csv'))
+        test_pred_proba_df.to_csv(os.path.join(raw_output_filename, 'test_pred_proba_df.csv'))
 
-            # Export classification report
-            flat_train_pred, flat_train_label = train_pred_df.values.flatten().astype(int), train_label_df.values.flatten().astype(int)
-            flat_valid_pred, flat_valid_label = valid_pred_df.values.flatten().astype(int), valid_label_df.values.flatten().astype(int)
-            flat_test_pred, flat_test_label = test_pred_df.values.flatten().astype(int), test_label_df.values.flatten().astype(int)
+        # Export classification report
+        flat_train_pred, flat_train_label = train_pred_df.values.flatten().astype(int), train_label_df.values.flatten().astype(int)
+        flat_valid_pred, flat_valid_label = valid_pred_df.values.flatten().astype(int), valid_label_df.values.flatten().astype(int)
+        flat_test_pred, flat_test_label = test_pred_df.values.flatten().astype(int), test_label_df.values.flatten().astype(int)
 
-            train_report = pd.DataFrame(classification_report(flat_train_label, flat_train_pred, output_dict=True)).transpose()
-            valid_report = pd.DataFrame(classification_report(flat_valid_label, flat_valid_pred, output_dict=True)).transpose()
-            test_report = pd.DataFrame(classification_report(flat_test_label, flat_test_pred, output_dict=True)).transpose()
+        train_report = pd.DataFrame(classification_report(flat_train_label, flat_train_pred, output_dict=True)).transpose()
+        valid_report = pd.DataFrame(classification_report(flat_valid_label, flat_valid_pred, output_dict=True)).transpose()
+        test_report = pd.DataFrame(classification_report(flat_test_label, flat_test_pred, output_dict=True)).transpose()
 
-            report_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.report_dir)
-            os.mkdir(report_filename)
+        report_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.report_dir)
+        os.mkdir(report_filename)
 
-            train_report.to_csv(os.path.join(report_filename, 'train_report.csv'))
-            valid_report.to_csv(os.path.join(report_filename, 'valid_report.csv'))
-            test_report.to_csv(os.path.join(report_filename, 'test_report.csv'))
+        train_report.to_csv(os.path.join(report_filename, 'train_report.csv'))
+        valid_report.to_csv(os.path.join(report_filename, 'valid_report.csv'))
+        test_report.to_csv(os.path.join(report_filename, 'test_report.csv'))
 
-            # Export Confusion Matrix
-            train_conf = pd.DataFrame(confusion_matrix(flat_train_label, flat_train_pred)).transpose()
-            valid_conf = pd.DataFrame(confusion_matrix(flat_valid_label, flat_valid_pred)).transpose()
-            test_conf = pd.DataFrame(confusion_matrix(flat_test_label, flat_test_pred)).transpose()
+        # Export Confusion Matrix
+        train_conf = pd.DataFrame(confusion_matrix(flat_train_label, flat_train_pred)).transpose()
+        valid_conf = pd.DataFrame(confusion_matrix(flat_valid_label, flat_valid_pred)).transpose()
+        test_conf = pd.DataFrame(confusion_matrix(flat_test_label, flat_test_pred)).transpose()
 
-            conf_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.confusion_mat_dir)
-            os.mkdir(conf_filename)
+        conf_filename = os.path.join(self.config.checkpoint_dir, self.config.directory, period, self.config.confusion_mat_dir)
+        os.mkdir(conf_filename)
 
-            train_conf.to_csv(os.path.join(conf_filename, 'train_conf.csv'))
-            valid_conf.to_csv(os.path.join(conf_filename, 'valid_conf.csv'))
-            test_conf.to_csv(os.path.join(conf_filename, 'test_conf.csv'))
+        train_conf.to_csv(os.path.join(conf_filename, 'train_conf.csv'))
+        valid_conf.to_csv(os.path.join(conf_filename, 'valid_conf.csv'))
+        test_conf.to_csv(os.path.join(conf_filename, 'test_conf.csv'))
 
     def model_passing(self, data_loader, result_df, model):
         label_df = result_df.copy()
@@ -106,26 +99,19 @@ class Evaluator:
         for input_hist, label in data_loader:
             pred_proba = []
             input_hist = torch.squeeze(input_hist, dim=0).type(torch.float32).to(model.device)
-            if self.config.target_type == 'classification':
-                y_pred_proba = model.forward(input_hist).detach().cpu().numpy()
-                for i in range(len(y_pred_proba)):
-                    pred_proba.append('{}'.format(y_pred_proba[i, :]))
-                y_pred = np.argmax(y_pred_proba, axis=1)
-            else:
-                y_pred = model.forward(input_hist).detach().cpu().numpy()
-                y_pred = np.squeeze(y_pred, axis=1)
-                label = torch.squeeze(torch.squeeze(label, dim=0), dim=1)
+            y_pred_proba = model.forward(input_hist).detach().cpu().numpy()
+            for i in range(len(y_pred_proba)):
+                pred_proba.append('{}'.format(y_pred_proba[i, :]))
+            y_pred = np.argmax(y_pred_proba, axis=1)
 
             result_df.iloc[counter, :] = y_pred
             label_df.iloc[counter, :] = label
 
-            if self.config.target_type == 'classification':
-                proba_result_df.iloc[counter, :] = pred_proba
+            proba_result_df.iloc[counter, :] = pred_proba
 
             counter += 1
-        if self.config.target_type == 'classification':
-            return result_df, label_df, proba_result_df
-        return result_df, label_df
+
+        return result_df, label_df, proba_result_df
 
     def export_history(self, hist, period):
         cost_hist, train_acc_hist, valid_acc_hist, train_f1_hist, valid_f1_hist = hist
@@ -135,12 +121,11 @@ class Evaluator:
         # Plot cost hist
         self.cost_plot(cost_hist)
 
-        if self.config.target_type == 'classification':
-            # Plot accuracy over time
-            self.comparison_plot(train_acc_hist, valid_acc_hist, 'accuracy')
+        # Plot accuracy over time
+        self.comparison_plot(train_acc_hist, valid_acc_hist, 'accuracy')
 
-            # Plot f1 over time
-            self.comparison_plot(train_f1_hist, valid_f1_hist, 'f1')
+        # Plot f1 over time
+        self.comparison_plot(train_f1_hist, valid_f1_hist, 'f1')
 
     def cost_plot(self, df):
         fig, ax = plt.subplots(1, 1, figsize=self.config.fig_size)
@@ -148,8 +133,6 @@ class Evaluator:
         ax.set_xlabel('Epochs')
         ax.set_ylabel('Cost from training step')
         ax.set_title('Cost over epochs')
-        if self.config.target_type == 'regression':
-            ax.set_ylim((0, 0.003))
         ax.legend()
         plt.savefig(os.path.join(self.hist_filename, 'cost_plot.png'))
         plt.clf()

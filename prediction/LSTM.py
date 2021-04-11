@@ -24,12 +24,8 @@ class LSTM(nn.Module):
         # Fully-connected layer
         self.fc = nn.Linear(in_features=hidden_dims,
                             out_features=hidden_dims)
-        if config.target_type == 'classification':
-            self.fc1 = nn.Linear(in_features=hidden_dims,
-                                 out_features=3)
-        else:
-            self.fc1 = nn.Linear(in_features=hidden_dims,
-                                 out_features=1)
+        self.fc1 = nn.Linear(in_features=hidden_dims,
+                             out_features=3)
         self.softmax = nn.Softmax(dim=1)
         self.leaky_relu = nn.LeakyReLU()
 
@@ -40,10 +36,7 @@ class LSTM(nn.Module):
         else:
             self.optimizer = optim.RMSprop(params=self.parameters(), lr=lr,
                                            weight_decay=weight_decay)
-        if config.target_type == 'classification':
-            self.loss = nn.CrossEntropyLoss()
-        else:
-            self.loss = nn.MSELoss()
+        self.loss = nn.CrossEntropyLoss()
 
         # Device
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -69,8 +62,7 @@ class LSTM(nn.Module):
         # Prediction layer
         # fc_result = self.leaky_relu(self.fc(state_embedding))
         preds = self.dropout(self.fc1(state_embedding))
-        if self.config.target_type == 'classification':
-            preds = self.softmax(preds)
+        preds = self.softmax(preds)
 
         return preds
 

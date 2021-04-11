@@ -39,12 +39,8 @@ class TSGNN(nn.Module):
         self.rel_att_softmax = nn.Softmax(dim=0)
 
         # Fully-connected layer
-        if config.target_type == 'classification':
-            self.fc1 = nn.Linear(in_features=hidden_dims,
-                                 out_features=3)
-        else:
-            self.fc1 = nn.Linear(in_features=hidden_dims,
-                                 out_features=1)
+        self.fc1 = nn.Linear(in_features=hidden_dims,
+                             out_features=3)
         self.softmax = nn.Softmax(dim=1)
 
         # Utils
@@ -54,10 +50,7 @@ class TSGNN(nn.Module):
         else:
             self.optimizer = optim.RMSprop(params=self.parameters(), lr=lr,
                                            weight_decay=weight_decay)
-        if config.target_type == 'classification':
-            self.loss = nn.CrossEntropyLoss()
-        else:
-            self.loss = nn.MSELoss()
+        self.loss = nn.CrossEntropyLoss()
 
         self.leaky_relu = nn.LeakyReLU(negative_slope=0.2)
 
@@ -81,7 +74,6 @@ class TSGNN(nn.Module):
         _, (state_embedding, _) = self.lstm(stock_hist)
         state_embedding = self.dropout(state_embedding)
         state_embedding = torch.squeeze(state_embedding, dim=0)
-        # print(torch.isnan(state_embedding).any())
 
         # Padding 0 as a placeholder for nodes that don't have relation
         state_embedding = torch.cat((torch.zeros(1, self.hidden_dims).to(self.device),
@@ -92,8 +84,7 @@ class TSGNN(nn.Module):
 
         # Prediction layer
         preds = self.fc1(final_state_embedding)
-        if self.config.target_type == 'classification':
-            preds = self.softmax(preds)
+        preds = self.softmax(preds)
 
         return preds
 
@@ -118,7 +109,6 @@ class TSGNN(nn.Module):
         attention = torch.cat((neighbors_embedding, self_emb, att_rel_emb), -1)
         attention_score = self.leaky_relu(self.fc_att(attention))
         attention_weight = self.att_softmax(attention_score)
-        # print(attention_weight.shape, neighbors_embedding.shape)
 
         # Aggregate score
         relation_count = torch.from_numpy(np.expand_dims(self.rel_num + EPSILON, -1)).type(torch.float32).to(
