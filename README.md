@@ -7,3 +7,6 @@ We select the initial dataset of stocks based on SET100 and the other stocks tha
 
 ## Usage
 To replicate the result in the paper, run **main.py** file and change the value of each hyperparameter in **config.py** file. However, all of the initial value in the file are the configuration that we used in paper.
+
+## Result
+Result from this study can be found in this google drive ([link](https://drive.google.com/drive/folders/1Gbw4Q2ABm7DMn2MjX5NnNvlO6miWFdgk?usp=sharing))
